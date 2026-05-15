@@ -1,27 +1,68 @@
-# 🚀 QSAR logKoc Review Project
+# QSAR logKoc Modeling Project
 
-## 📌 Project Overview
-본 프로젝트는 Gramatica et al. (2014)의 환경 오염 물질 QSAR 모델링 연구를 기반으로, 최신 앙상블/컨센서스(Consensus) 머신러닝 기법을 적용하여 모델의 예측력을 극대화하고 이를 엄격하게 검증하는 리뷰 논문 작성 프로젝트입니다.
+## Project Overview
+This project builds and validates an advanced QSAR model for predicting **logKoc** using the QDB.177 dataset from Gramatica et al. 2014.
 
-- **Target Property:** logKoc (Soil sorption coefficient)
-- **Dataset:** 원본 데이터 정제를 통해 유효 데이터셋을 확보 
-- **Primary Goal:** 다양한 알고리즘 조합을 테스트하여 "Best Result"를 도출하고, 원본 논문의 성능($R^2_{ext} = 0.794$, $\sigma = 0.543$) 및 세계적 QSAR 신뢰도 검증 평가지표(Metric)와 비교 분석합니다.
+The main objective is to develop an ensemble/consensus QSAR workflow, test a wide range of model combinations, identify the best-performing result, and compare the final external validation metrics against the original paper.
 
-## 📝 Review Paper Structure
-최종 결과물인 `Paper_Draft.md`는 다음의 학술 논문 형식을 엄격히 따릅니다:
-1. **Introduction:** logKoc의 중요성 및 기존 연구 한계, 앙상블 기법 도입의 필요성
-2. **Methods:** Y-Ranking 데이터 분할, Mordred 디스크립터 추출, PyQSAR3 앙상블 모델링 및 교차 검증 방법론
-3. **Results and discussion:** - 자체 추가된 엄격한 Metric (예: CCC, Q^2_F1/F2/F3 등) 결과
-    - Original 결과(Gramatica 2014)와의 직접 비교
-    - Williams Plot을 통한 Applicability Domain(AD) 검증
-4. **Conclusion:** Best 조합의 우수성 및 환경 독성 예측 모델로서의 가치 요약
-5. **References:** 최대 10 pages 이내로 마무리
-6. **Supplementary Information:** 평가지표(Metric) 산출에 사용된 핵심 Python 코드 첨부
+- **Target property:** logKoc
+- **Reference dataset:** QDB.177, Gramatica et al. 2014
+- **Reference benchmark:** Original external Test R² = 0.794
+- **Primary goal:** Build the strongest possible consensus QSAR model and report the results in formal review-paper format.
 
-## 🛠 Tech Stack & Conda Environments
-환경 간의 패키지 충돌(Data Leakage 및 Dependency 이슈)을 방지하기 위해 두 개의 독립된 Conda 가상환경을 사용합니다.
-- **`conda activate mordred`**: 분자 디스크립터 추출 및 데이터 전처리 (`02_mordred_extract.ipynb`)
-- **`conda activate py3`**: PyQSAR3 기반 앙상블 모델 학습 및 Metric 평가 (`03_pyqsar3_modeling.ipynb`, `04_result_metrics.ipynb`)
+## Roles
+- **Parent Engineer & Documentation Manager:** Plans the workflow, manages documentation, reviews reported outputs, and gives step-by-step instructions.
+- **Executor:** Runs all Python code locally in Jupyter Lab and reports outputs back for interpretation and next-step planning.
+
+## Conda Environments
+This project uses separate environments to avoid package conflicts.
+
+### `mordred`
+Used for:
+- RDKit-based SMILES cleaning and standardization
+- Mordred descriptor extraction (Raw calculation only)
+
+### `py3`
+Used for:
+- Data pre-processing based strictly on the Training set (Handling NaNs, Variance Thresholds, Correlation Filtering)
+- PyQSAR3 feature selection and modeling
+- K-Fold cross-validation & Consensus model construction
+- External validation metrics & Applicability Domain analysis
+
+## Master Curriculum
+
+### Phase 1: Data Preparation & Split
+Clean the raw SMILES using RDKit and prepare the modeling dataset.
+- Load the raw QDB.177 data (Parsing XML/directory structure in `data/raw/`).
+- Validate and clean SMILES with RDKit (Remove invalid structures, salts, duplicates).
+- Secure approximately 643 valid compounds.
+- Split the final dataset into Train/Test using Y-Ranking (80/20 split).
+
+### Phase 2: Mordred Descriptor Extraction
+Extract raw molecular descriptors in the `mordred` environment.
+- Calculate Mordred descriptors for the Train and Test sets separately.
+- **CRITICAL RULE 1:** Do NOT filter columns (e.g., NaNs, zero-variance) in this phase.
+- **CRITICAL RULE 2 (Reference):** Strictly refer to `examples/example_mordred/example_mordred.md` for syntax and best practices before writing the notebook.
+
+### Phase 3: Feature Filtering & PyQSAR3 Modeling
+Perform strict feature selection and train diverse machine learning models in the `py3` environment.
+- **Feature Filtering:** Fit filters (remove NaNs, zero-variance, high correlation) and apply `pyqsar3` feature selection methods **strictly using the Training set only**. Transform the Test set.
+- Train multiple algorithms using the filtered training set.
+- Apply K-Fold cross-validation on the training set.
+- Build ensemble/consensus models and select the winning model.
+- **CRITICAL RULE (Reference):** Strictly refer to `examples/example_pyqsar3/example_pyqsar3.md` to understand the `pyqsar3` library syntax and pipeline before writing the code.
+
+### Phase 4: External Validation & Applicability Domain
+Evaluate the selected model on the external test set.
+- Calculate external validation metrics (R²_ext, RMSE, MAE, CCC).
+- Compare performance against the original Gramatica 2014 benchmark.
+- Draw a Williams Plot and assess Applicability Domain.
+
+### Phase 5: Paper Draft & Repository Documentation
+Prepare formal documentation and manuscript-style outputs.
+- Draft `docs/Paper_Draft.md` (Intro to Supp Info).
+- Compare final model performance against the original paper.
+- Document the workflow in `README.md`.
 
 ## 📂 Directory Architecture
 ```text
