@@ -22,7 +22,7 @@ Used for:
 - RDKit-based SMILES cleaning and standardization
 - Mordred descriptor extraction (Raw calculation only)
 
-### `py3`
+### `pq3`
 Used for:
 - Data pre-processing based strictly on the Training set (Handling NaNs, Variance Thresholds, Correlation Filtering)
 - PyQSAR3 feature selection and modeling
@@ -44,13 +44,39 @@ Extract raw molecular descriptors in the `mordred` environment.
 - **CRITICAL RULE 1:** Do NOT filter columns (e.g., NaNs, zero-variance) in this phase.
 - **CRITICAL RULE 2 (Reference):** Strictly refer to `examples/example_mordred/example_mordred.md` for syntax and best practices before writing the notebook.
 
-### Phase 3: Feature Filtering & PyQSAR3 Modeling
-Perform strict feature selection and train diverse machine learning models in the `py3` environment.
-- **Feature Filtering:** Fit filters (remove NaNs, zero-variance, high correlation) and apply `pyqsar3` feature selection methods **strictly using the Training set only**. Transform the Test set.
-- Train multiple algorithms using the filtered training set.
-- Apply K-Fold cross-validation on the training set.
-- Build ensemble/consensus models and select the winning model.
-- **CRITICAL RULE (Reference):** Strictly refer to `examples/example_pyqsar3/example_pyqsar3.md` to understand the `pyqsar3` library syntax and pipeline before writing the code.
+### Phase 3: Feature Filtering & Multi-Track PyQSAR3 Modeling
+
+Perform strict descriptor clustering, multi-track feature selection, and train linear statistical models natively within the py3 environment.
+
+#### 1. Feature Filtering & Common Preprocessing
+- **Basic Filters:** Apply strict preprocessing filters (remove NaNs, zero-variance, high correlation descriptors) strictly using the Training set only. Transform the Test set accordingly to prevent data leakage.
+- **3-Track Clustering Evaluation:** Apply three distinct clustering methods to the filtered training features to handle multicollinearity:
+  1) Hierarchical Clustering
+  2) K-Means Clustering
+  3) SOM (Self-Organizing Maps) *[Note: Use native pyqsar3 or sklearn approximation if SOM is constrained]*
+- **Silhouette Scoring:** Compute the Silhouette Score for all three clustering tracks to evaluate group structural quality.
+
+#### 2. Multi-Track PyQSAR3 Execution Matrix (12 Models)
+Feed each of the 3 cluster datasets into the coupled pyqsar3 selection-modeling engines. Execute both Feature Selection and Model Building simultaneously for all 12 combinations:
+- **Hierarchical Track (4 Models):**
+  - Cluster-GA ➔ MLR, PLS
+  - Cluster-MC ➔ MLR, PLS
+- **K-Means Track (4 Models):**
+  - Cluster-GA ➔ MLR, PLS
+  - Cluster-MC ➔ MLR, PLS
+- **SOM Track (4 Models):**
+  - Cluster-GA ➔ MLR, PLS
+  - Cluster-MC ➔ MLR, PLS
+
+#### 3. Validation & Model Selection
+- **Internal Cross-Validation:** Evaluate all 12 coupled pipelines using 5-Fold Cross-Validation ($Q^2$ or $R^2_{cv}$) exclusively on the training folds.
+- **External Evaluation:** Validate predictions on the split Test set ($R^2_{ext}$, RMSE).
+- **Winning Track Selection:** Compare metrics to find the Absolute Winner among the 12 models.
+- **Optional Advanced ML Expansion:** (Optional) Extract the optimal feature indices from the winning clustering track, and feed them into external SVR and Random Forest models with hyperparameter tuning to benchmark linear vs. non-linear performance.
+
+#### CRITICAL RULE (Reference)
+Strictly refer to `examples/example_pyqsar3/example_pyqsar3.md` to map the exact native syntax for clustering integration and GA/MC engine invocation before writing the production notebook cells.
+
 
 ### Phase 4: External Validation & Applicability Domain
 Evaluate the selected model on the external test set.

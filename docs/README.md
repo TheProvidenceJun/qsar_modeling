@@ -29,7 +29,7 @@ conda activate mordred
 
 # 2. QSAR 앙상블 모델링 환경 (PyQSAR3)
 conda env create -f envs/env_pyqsar3.yml
-conda activate py3
+conda activate pq3
 
 ```
 
