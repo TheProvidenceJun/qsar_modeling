@@ -1,0 +1,36 @@
+{
+  "selection_basis": "highest Q2_ext_F2 among Step 3.4 nonlinear candidates",
+  "model": "Hierarchical_GA_RF",
+  "algorithm_type": "RF",
+  "selector": "GA",
+  "n_features": 8,
+  "features": [
+    "AETA_eta",
+    "BCUTd-1l",
+    "BCUTdv-1h",
+    "BCUTi-1h",
+    "BCUTi-1l",
+    "C2SP3",
+    "ETA_dPsi_B",
+    "FilterItLogS"
+  ],
+  "hyperparameters": {
+    "model__max_depth": 10,
+    "model__n_estimators": 100
+  },
+  "metrics": {
+    "R2_train": 0.9656890626127151,
+    "CCC_tr": 0.9818293935711582,
+    "RMSE_train": 0.22218628813173244,
+    "Q2_cv": 0.7944746572664193,
+    "CCC_cv": 0.8876113104382592,
+    "RMSE_cv": 0.543793049758326,
+    "MAE_cv": 0.418373366636811,
+    "Q2_ext_F1": 0.8259005197690957,
+    "Q2_ext_F2": 0.825886168954622,
+    "Q2_ext_F3": 0.8304514565555985,
+    "CCC_ext": 0.9120352202675872,
+    "RMSE_ext": 0.4939101982924334,
+    "MAE_ext": 0.3903744332146797
+  }
+}
