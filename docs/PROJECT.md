@@ -46,9 +46,9 @@ Extract raw molecular descriptors in the `mordred` environment.
 
 ### Phase 3: Advanced Feature Selection & Modeling (Non-linear & Validation)
 
-Perform strict preprocessing, descriptor clustering, linear baseline modeling, server-side non-linear expansion, and robustness validation under the Gramatica et al. 2014 8-descriptor constraint.
+Perform strict preprocessing, descriptor clustering, linear baseline modeling, server-side non-linear expansion, and robustness validation under the Gramatica et al. 2014 eight-descriptor constraint.
 
-**Feature Constraint:** All GA and MC feature-selection runs in this phase MUST be constrained to select exactly **8 descriptors**, matching the descriptor count used in the Gramatica et al. 2014 benchmark model. Any exploratory run using a different descriptor count is non-production and must not be reported as the primary benchmark comparison.
+**Feature Constraint:** All GA and MC feature-selection runs in this phase MUST be constrained to select exactly **eight descriptors**, matching the descriptor count used in the Gramatica et al. 2014 benchmark model. Any exploratory run using a different descriptor count is non-production and must not be reported as the primary benchmark comparison.
 
 **OECD Evaluation Metrics Framework:** Every generated production model must report the following metrics:
 - **Internal Goodness-of-fit:** $R^2_{train}$, $CCC_{tr}$, $RMSE_{train}$
@@ -123,15 +123,15 @@ Generate publication-quality visual diagnostics for the final Best Model.
 
 Synthesize and align all multi-track validation statistics into a unified, publication-ready master matrix to satisfy rigorous OECD QMRF specifications.
 
-1. **Dual-Architecture Synthesis (Linear vs. Non-Linear):**
+- **Dual-Architecture Synthesis (Linear vs. Non-Linear):**
    - Import the 12 linear baseline results (MLR/PLS from Step 3.3) and the 4 non-linear advanced estimator results (SVR/RF from Step 3.4).
    - Construct a symmetrical master benchmark table comparing all 16 models across 3 core dimensions: Goodness-of-Fit, Robustness (LMO), and Predictivity.
 
-2. **Champion Lock-in Statistics Extraction:**
+- **Champion Lock-in Statistics Extraction:**
    - For the absolute winning combination (Hierarchical_MC_MLR), extract and append the exact 1,000-run Monte Carlo Cross-Validation (MCCV) statistical distributions denoted as Mean ± Standard Deviation ($SD$).
    - Compute and log the final Y-Scrambling coefficient ($R^2_{y-sc}$) to confirm the model's structural resistance against chance correlation.
 
-3. **OECD QMRF Unified Metric Compliance Matrix:**
+- **OECD QMRF Unified Metric Compliance Matrix:**
    - Ensure the integrated DataFrame strictly computes and displays the following columns for cross-architecture verification:
      - **Goodness-of-Fit:** $R^2_{train}$, $RMSE_{train}$, $CCC_{tr}$
      - **Robustness (Internal CV):** $Q^2_{cv}$, $RMSE_{cv}$, $MAE_{cv}$, $CCC_{cv}$
@@ -143,10 +143,10 @@ Complete the final quantitative benchmark, manuscript narrative, repository docu
 
 #### Strict Academic Manuscript Formatting Guidelines
 All Phase 5 manuscript drafting and revision work must comply with the following rules.
-- **Formal tone only:** Manuscript text must not contain colloquialisms, informal phrasing, or contractions. Use formal constructions such as "did not" rather than "didn't" and "is not" rather than "isn't".
+- **Formal tone only:** Manuscript text must not contain colloquialisms, informal phrasing, or contractions. Use formal constructions such as "did not" and "is not".
 - **No numbers at sentence starts:** A sentence must not begin with a raw numeral. Spell out the number or restructure the sentence, for example "Eight descriptors were selected..." rather than "8 descriptors were selected...".
 - **Strict tense consistency:** Use past tense for completed experimental actions and reported results, and use present tense for established facts, general principles, figure/table descriptions, and interpretive statements that remain valid.
-- **Explicit pronouns:** Avoid ambiguous demonstrative pronouns. Do not write vague constructions such as "This shows that..." or "It demonstrates...". Supply the specific noun, for example "This performance gap indicates that..." or "The high cross-validation score demonstrates that...".
+- **Explicit pronouns:** Avoid ambiguous demonstrative pronouns. Supply the specific governing noun in interpretive statements, for example "The performance gap indicates that..." or "The high cross-validation score demonstrates that...".
 - **Logical transitions:** Do not overuse causal conjunctions such as "therefore", "thus", "hence", and "consequently". Sentence flow must be supported by clear technical logic rather than forced transitional phrasing.
 
 **Context preservation protocol:** Every Phase 5 text expansion must overwrite `docs/Paper_Draft.md` by building cleanly upon the previously established Phase 1-4 manuscript baseline. The writer must read the current full paper draft before editing, preserve validated scientific claims, and avoid replacing established sections with disconnected prose.
@@ -192,6 +192,23 @@ Merge verified Phase 4 and Phase 5 verification and diagnostic source code into 
 - Include only essential, reproducible code blocks within the strict 10-page manuscript constraint.
 - Prioritize code supporting benchmark table construction, final metrics integration, predicted-versus-experimental visualization, and Williams Plot generation.
 - Avoid duplicating large intermediate notebook logic unless it is required for reproducibility or auditability.
+
+## Peer-Review Vulnerability & Hardening Plan
+
+This section records the final peer-review risk matrix identified after manuscript completion. The objective is to convert likely reviewer objections into explicit follow-up analyses and defensible framing before external submission or repository release.
+
+| Vulnerability Vector | Reviewer Risk | Hardening Strategy | Target Evidence |
+| --- | --- | --- | --- |
+| Low Silhouette Score Defense | The hierarchical feature-clustering Silhouette score of 0.108 may be interpreted as weak cluster separation. | Execute an ablation study comparing the validated pipeline against a baseline workflow that skips feature clustering entirely. The comparison must evaluate whether feature clustering improves model parsimony, selection stability, and predictive efficiency. | Ablation table comparing clustered and non-clustered workflows by $Q^2_{cv}$, $Q^2_{ext\ F2}$, RMSE, selected-feature stability, and runtime burden. |
+| Pipeline Complexity vs. Performance Gain | The external $R^2$ improvement of approximately 0.02 over Gramatica et al. (2014) may be challenged as too small to justify additional pipeline complexity. | Compile exact error degradation metrics, including RMSE and MAE absolute reductions, and perform statistical significance testing where paired prediction errors are available. The $p$-value analysis must justify whether the improvement is meaningful for regulatory classification. | Paired prediction-error comparison, RMSE and MAE deltas, confidence intervals, and statistical significance output. |
+| Post-hoc Chemical Storytelling | Descriptor interpretation may be criticized as cherry-picked after model selection. | Run a cross-model feature-importance and feature-consensus analysis comparing `Hierarchical_MC_MLR`, `Hierarchical_MC_PLS`, and related high-ranking candidates. The analysis must demonstrate whether the dominant structural signals recur across adjacent models. | Consensus descriptor-frequency table, coefficient or loading comparison, and overlap statistics across high-ranking models. |
+| Historical 2014 Dataset Constraint | The curated dataset contains 642 compounds, which may be viewed as small relative to modern large-scale chemical modeling benchmarks. | Frame the project explicitly as a controlled benchmarking vehicle rather than a big-data extraction exercise. The defense must emphasize identical operational constraints, identical eight-descriptor budget, and direct comparability against Gramatica et al. (2014). | Manuscript language and repository documentation describing the study as strict algorithm-topology benchmarking under fixed historical constraints. |
+
+### Follow-Up Roadmap
+- Execute the feature-clustering ablation study using the same filtered descriptor matrix and the same eight-descriptor constraint.
+- Generate paired prediction-error statistics for the champion model and the Gramatica 2014 baseline where comparable prediction records are available.
+- Quantify feature-selection stability across `Hierarchical_MC_MLR`, `Hierarchical_MC_PLS`, and the nearest high-performing non-linear candidate.
+- Preserve the controlled-benchmarking framing in README, manuscript discussion, and repository metadata.
 
 ## 📂 Directory Architecture
 ```text

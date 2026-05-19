@@ -1,4 +1,4 @@
-# Paper Draft
+# Development of a Soil Organic Carbon-Water Partition Coefficient ($logK_{oc}$) Prediction Model Using Hierarchical Descriptor Clustering and Monte Carlo-MLR
 
 ## 1. Introduction
 
