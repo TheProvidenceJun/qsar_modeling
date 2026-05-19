@@ -1,0 +1,23 @@
+{
+  "champion_model": "Hierarchical_MC_MLR",
+  "algorithm": "MLR",
+  "n_features": 8,
+  "features": [
+    "ABC",
+    "BCUTs-1h",
+    "C1SP2",
+    "ETA_shape_y",
+    "FilterItLogS",
+    "NdS",
+    "SlogP_VSA1",
+    "SlogP_VSA2"
+  ],
+  "n_scrambling_iterations": 100,
+  "base_random_state": 20260519,
+  "original_R2_train": 0.8201821478315219,
+  "average_R2_y_sc": 0.01619635413847225,
+  "sd_R2_y_sc": 0.007508013332348707,
+  "min_R2_y_sc": 0.002336108525868852,
+  "max_R2_y_sc": 0.039414697647965014,
+  "conclusion": "Chance correlation rejected: the original model R2 is substantially higher than the average scrambled R2."
+}
