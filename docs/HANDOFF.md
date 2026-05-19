@@ -1,7 +1,7 @@
 # Project Handoff
 
 ## Current Status
-Phase 3 - Step 3.3: 8-Descriptor 12-Model Linear Matrix has been completed successfully.
+Phase 3 - Step 3.5 script generation is complete. The absolute Champion Model has been identified strictly by the highest `Q²_cv`.
 - The QDB.177 `M2.logKoc` endpoint was parsed from `data/raw/properties/M2.logKoc/values`.
 - Raw compound identifiers were mapped to SMILES files under `data/raw/compounds/<Compound Id>/daylight-smiles`.
 - RDKit validation and canonicalization secured 642 unique valid compounds from 643 raw entries.
@@ -12,7 +12,10 @@ Phase 3 - Step 3.3: 8-Descriptor 12-Model Linear Matrix has been completed succe
 - The 377 filtered descriptors were clustered variable-wise using native PyQSAR3 `FeatureCluster` modules, producing 20-25 descriptor clusters for the upcoming GA/MC feature-selection engines.
 - The 12-model linear baseline matrix was regenerated under the strict Gramatica 2014 constraint of exactly 8 descriptors per model.
 - Comprehensive internal and external metrics were calculated for all 12 linear baselines.
-- The workflow is now pivoting from notebooks to server-side standalone Python scripts for heavy non-linear modeling.
+- The server-side non-linear modeling script evaluated four Hierarchical-track non-linear candidates: GA-SVR, MC-SVR, GA-RF, and MC-RF.
+- All 16 candidate models have now been generated and evaluated: 12 linear baselines plus 4 non-linear models.
+- The rigorous `Q²_cv` comparison selected `Hierarchical_MC_MLR` as the Champion Model.
+- A standalone MCCV script has been generated to run 100 random 80/20 Monte Carlo splits on the locked Champion Model.
 
 ## Active Project
 - **Project:** QSAR logKoc Modeling Project
@@ -27,34 +30,24 @@ Phase 3 - Step 3.3: 8-Descriptor 12-Model Linear Matrix has been completed succe
 This is the next action.
 
 ## Next Action
-Step 3.4: Generate the standalone server-side Python script:
-`run_nonlinear_models.py`
+The Project Manager will execute the standalone MCCV script on the server:
+`run_mccv.py`
 
-The script must run SVR and Random Forest models with GA and MC feature-selection strategies on the Hierarchical feature-cluster track only. All feature-selection paths must remain constrained to exactly **8 descriptors**.
+Execution command:
+```bash
+conda activate qsar_ml
+python run_mccv.py
+```
 
-Required non-linear model matrix:
-- Hierarchical-GA-SVR
-- Hierarchical-GA-RF
-- Hierarchical-MC-SVR
-- Hierarchical-MC-RF
+The script will:
+- Re-inspect `data/features/12_model_extended_metrics.csv` and `data/features/nonlinear_model_metrics.csv`.
+- Confirm the Champion strictly by highest `Q²_cv`.
+- Merge `filtered_train_pyqsar3.csv` and `filtered_test_pyqsar3.csv` into the full 642-compound dataset.
+- Run 100 MCCV random 80/20 splits using the Champion's locked 8 descriptors.
+- Save `data/features/mccv_100_iterations.csv`.
+- Save `data/features/mccv_summary.json`.
 
-Required execution design:
-- Use the new `qsar_ml` conda environment.
-- Use multiprocessing with `max(1, total_cores - 2)` workers.
-- Use rigorous `GridSearchCV` for SVR and RF hyperparameter tuning.
-- Produce a real-time log at `data/features/nonlinear_search_log.txt`.
-
-Required outputs:
-- `data/features/best_nonlinear_config.json`
-- `data/features/nonlinear_model_metrics.csv`
-- `data/features/nonlinear_search_log.txt`
-
-Required metrics:
-- Internal goodness-of-fit: `R²_train`, `CCC_tr`, `RMSE_train`
-- Internal robustness by 5-fold CV: `Q²_cv`, `CCC_cv`, `RMSE_cv`, `MAE_cv`
-- External predictivity: `Q²_ext F1`, `Q²_ext F2`, `Q²_ext F3`, `CCC_ext`, `RMSE_ext`, `MAE_ext`
-
-Do not reintroduce 5-descriptor production runs. Do not select a final Best Model until the 12 linear baselines and 4 non-linear candidates have been compared under the same extended metrics framework.
+After MCCV execution, review the MCCV mean and standard deviation for `R²_ext`, `RMSE_ext`, and `MAE_ext` before proceeding to Step 3.6 Y-scrambling.
 
 ## Completed Tasks
 1. Parsed the QDB.177 logKoc endpoint (`M2.logKoc`) and constructed a unified dataset containing `SMILES` and `logKoc`.
@@ -99,6 +92,24 @@ Do not reintroduce 5-descriptor production runs. Do not select a final Best Mode
     - `data/features/12_model_extended_metrics.csv`
     - `data/features/final_selected_features_8vars.json`
     - `data/features/test_predictions_8vars.csv`
+19. Generated the server-side non-linear modeling script:
+    - `run_nonlinear_models.py`
+20. Completed Step 3.4 server-side non-linear modeling on the Hierarchical feature-cluster track:
+    - Hierarchical-GA-SVR: `Q²_cv = 0.811`, `Q²_ext F2 = 0.809`
+    - Hierarchical-MC-SVR: `Q²_cv = 0.783`, `Q²_ext F2 = 0.764`
+    - Hierarchical-GA-RF: `Q²_cv = 0.794`, `Q²_ext F2 = 0.826`
+    - Hierarchical-MC-RF: `Q²_cv = 0.787`, `Q²_ext F2 = 0.803`
+21. Saved Step 3.4 outputs:
+    - `data/features/nonlinear_search_log.txt`
+    - `data/features/best_nonlinear_config.json`
+    - `data/features/nonlinear_model_metrics.csv`
+22. Completed strict best-model selection across all 16 evaluated models using `Q²_cv` only:
+    - Champion Model: `Hierarchical_MC_MLR`
+    - Algorithm: MLR
+    - `Q²_cv = 0.8119744761107354`
+    - Selected descriptors: `ABC`, `BCUTs-1h`, `C1SP2`, `ETA_shape_y`, `FilterItLogS`, `NdS`, `SlogP_VSA1`, `SlogP_VSA2`
+23. Generated the standalone MCCV script:
+    - `run_mccv.py`
 
 ## Phase 1 Outputs
 - `data/processed/train.csv`
@@ -122,6 +133,19 @@ Do not reintroduce 5-descriptor production runs. Do not select a final Best Mode
 - `data/features/12_model_extended_metrics.csv`
 - `data/features/final_selected_features_8vars.json`
 - `data/features/test_predictions_8vars.csv`
+
+## Phase 3 Step 3.4 Outputs
+- `run_nonlinear_models.py`
+- `data/features/nonlinear_search_log.txt`
+- `data/features/best_nonlinear_config.json`
+- `data/features/nonlinear_model_metrics.csv`
+
+## Phase 3 Step 3.5 Script Output
+- `run_mccv.py`
+
+## Expected Phase 3 Step 3.5 Runtime Outputs
+- `data/features/mccv_100_iterations.csv`
+- `data/features/mccv_summary.json`
 
 ## Environment For Next Step
 Recommended environment:

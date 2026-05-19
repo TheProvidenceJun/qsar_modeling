@@ -56,6 +56,11 @@ Perform strict preprocessing, descriptor clustering, linear baseline modeling, s
 - **External Predictivity (Test Set):** $Q^2_{ext\ F1}$, $Q^2_{ext\ F2}$, $Q^2_{ext\ F3}$, $CCC_{ext}$, $RMSE_{ext}$, $MAE_{ext}$
 - **Chance Correlation:** $R^2_{y-sc}$ by Y-scrambling, performed only on the final Best Model
 
+**Champion Model Selection Criteria:** The absolute Best Model must be selected strictly by the highest cross-validation score, $Q^2_{cv}$.
+- **Prevention of Overfitting:** Simple training fit ($R^2_{train}$) can be artificially inflated by memorizing the training data. Cross-validation ($Q^2_{cv}$) tests the model on unseen subsets within the training space and therefore reveals its true mathematical capability.
+- **Zero Tolerance for Data Leakage (Anti-Data Snooping):** Selecting a model based on external validation metrics ($R^2_{ext}$ or $Q^2_{ext}$) is a statistical fallacy because it allows information from the external Test set to leak into the model selection process. The Test set must remain completely unseen until final verification.
+- **Objective Proof of Generalization:** A high $Q^2_{cv}$ is the most honest and robust statistical evidence that the model can handle unknown chemical structures without structural or mathematical volatility.
+
 #### Step 3.1 - Step 3.3: Completed Data Preparation, Feature Clustering, and Linear Baseline Matrix
 - Step 3.1 completed native PyQSAR3-compatible pre-filtering using training-set-only filtering decisions.
 - Step 3.2 completed native PyQSAR3 descriptor/feature clustering using Hierarchical, K-Means, and SOM tracks.
@@ -83,11 +88,11 @@ Execute SVR and Random Forest models through a standalone Python script, not a J
   - $CCC_{ext}$, $RMSE_{ext}$, $MAE_{ext}$
 
 #### Step 3.5: MCCV (Monte Carlo Cross-Validation)
-Select the absolute Best Model among the 16 evaluated production candidates:
+Select the absolute Best Model among the 16 evaluated production candidates strictly according to the highest $Q^2_{cv}$:
 - 12 linear baseline models from Step 3.3
 - 4 non-linear models from Step 3.4: GA-SVR, GA-RF, MC-SVR, MC-RF
 
-After selection, lock the Best Model's 8 descriptors and optimal hyperparameters. Perform 100 random Train/Test splits to quantify robustness across repeated resampling. Report the full internal and external metric suite for the MCCV distribution, including mean, standard deviation, and relevant confidence intervals where appropriate.
+External validation metrics must not be used to choose the Best Model. After $Q^2_{cv}$-based selection, lock the Best Model's 8 descriptors and optimal hyperparameters. Perform 100 random Train/Test splits to quantify robustness across repeated resampling. Report the full internal and external metric suite for the MCCV distribution, including mean, standard deviation, and relevant confidence intervals where appropriate.
 
 #### Step 3.6: Y-Scrambling
 Perform chance-correlation analysis on the final Best Model only.
