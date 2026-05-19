@@ -1,7 +1,7 @@
 # Project Handoff
 
 ## Current Status
-Phase 3 - Step 3.5 script generation is complete. The absolute Champion Model has been identified strictly by the highest `Q²_cv`.
+Phase 3 - Step 3.6 script generation is complete. The Y-scrambling chance-correlation script has been created for the locked Champion Model.
 - The QDB.177 `M2.logKoc` endpoint was parsed from `data/raw/properties/M2.logKoc/values`.
 - Raw compound identifiers were mapped to SMILES files under `data/raw/compounds/<Compound Id>/daylight-smiles`.
 - RDKit validation and canonicalization secured 642 unique valid compounds from 643 raw entries.
@@ -15,7 +15,8 @@ Phase 3 - Step 3.5 script generation is complete. The absolute Champion Model ha
 - The server-side non-linear modeling script evaluated four Hierarchical-track non-linear candidates: GA-SVR, MC-SVR, GA-RF, and MC-RF.
 - All 16 candidate models have now been generated and evaluated: 12 linear baselines plus 4 non-linear models.
 - The rigorous `Q²_cv` comparison selected `Hierarchical_MC_MLR` as the Champion Model.
-- A standalone MCCV script has been generated to run 100 random 80/20 Monte Carlo splits on the locked Champion Model.
+- The 100-iteration MCCV robustness test on the locked `Hierarchical_MC_MLR` Champion Model yielded an average `R²_ext` of 0.806.
+- A standalone Y-scrambling script has been generated to test the locked Champion Model against chance correlation.
 
 ## Active Project
 - **Project:** QSAR logKoc Modeling Project
@@ -30,24 +31,25 @@ Phase 3 - Step 3.5 script generation is complete. The absolute Champion Model ha
 This is the next action.
 
 ## Next Action
-The Project Manager will execute the standalone MCCV script on the server:
-`run_mccv.py`
+The Project Manager will execute the standalone Y-scrambling script:
+`run_yscrambling.py`
 
 Execution command:
 ```bash
 conda activate qsar_ml
-python run_mccv.py
+python run_yscrambling.py
 ```
 
 The script will:
-- Re-inspect `data/features/12_model_extended_metrics.csv` and `data/features/nonlinear_model_metrics.csv`.
-- Confirm the Champion strictly by highest `Q²_cv`.
-- Merge `filtered_train_pyqsar3.csv` and `filtered_test_pyqsar3.csv` into the full 642-compound dataset.
-- Run 100 MCCV random 80/20 splits using the Champion's locked 8 descriptors.
-- Save `data/features/mccv_100_iterations.csv`.
-- Save `data/features/mccv_summary.json`.
+- Use the locked Champion Model: `Hierarchical_MC_MLR`.
+- Use the locked 8 descriptors: `ABC`, `BCUTs-1h`, `C1SP2`, `ETA_shape_y`, `FilterItLogS`, `NdS`, `SlogP_VSA1`, `SlogP_VSA2`.
+- Fit the original MLR model on the unscrambled training target and calculate `R²_train`.
+- Randomly permute the training `logKoc` values across 100 trials.
+- Refit the MLR model for each scrambled response vector and calculate `R²_y-sc`.
+- Save `data/features/yscrambling_100_iterations.csv`.
+- Save `data/features/yscrambling_summary.json`.
 
-After MCCV execution, review the MCCV mean and standard deviation for `R²_ext`, `RMSE_ext`, and `MAE_ext` before proceeding to Step 3.6 Y-scrambling.
+Do not report Y-scrambling results until the script has been executed and the actual outputs have been reviewed.
 
 ## Completed Tasks
 1. Parsed the QDB.177 logKoc endpoint (`M2.logKoc`) and constructed a unified dataset containing `SMILES` and `logKoc`.
@@ -110,6 +112,16 @@ After MCCV execution, review the MCCV mean and standard deviation for `R²_ext`,
     - Selected descriptors: `ABC`, `BCUTs-1h`, `C1SP2`, `ETA_shape_y`, `FilterItLogS`, `NdS`, `SlogP_VSA1`, `SlogP_VSA2`
 23. Generated the standalone MCCV script:
     - `run_mccv.py`
+24. Completed 100-iteration MCCV for the locked Champion Model:
+    - Champion Model: `Hierarchical_MC_MLR`
+    - Algorithm: MLR
+    - Champion `Q²_cv = 0.812`
+    - Champion descriptors: `ABC`, `BCUTs-1h`, `C1SP2`, `ETA_shape_y`, `FilterItLogS`, `NdS`, `SlogP_VSA1`, `SlogP_VSA2`
+    - MCCV `R²_ext`: mean = 0.806, SD = 0.032
+    - MCCV `RMSE_ext`: mean = 0.518, SD = 0.043
+    - MCCV `MAE_ext`: mean = 0.407, SD = 0.033
+25. Generated the standalone Y-scrambling script for the locked Champion Model:
+    - `run_yscrambling.py`
 
 ## Phase 1 Outputs
 - `data/processed/train.csv`
@@ -140,12 +152,17 @@ After MCCV execution, review the MCCV mean and standard deviation for `R²_ext`,
 - `data/features/best_nonlinear_config.json`
 - `data/features/nonlinear_model_metrics.csv`
 
-## Phase 3 Step 3.5 Script Output
+## Phase 3 Step 3.5 Outputs
 - `run_mccv.py`
-
-## Expected Phase 3 Step 3.5 Runtime Outputs
 - `data/features/mccv_100_iterations.csv`
 - `data/features/mccv_summary.json`
+
+## Phase 3 Step 3.6 Script Output
+- `run_yscrambling.py`
+
+## Expected Phase 3 Step 3.6 Runtime Outputs
+- `data/features/yscrambling_100_iterations.csv`
+- `data/features/yscrambling_summary.json`
 
 ## Environment For Next Step
 Recommended environment:
