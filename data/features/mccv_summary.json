@@ -1,0 +1,44 @@
+{
+  "champion_model": "Hierarchical_MC_MLR",
+  "algorithm": "MLR",
+  "source": "linear",
+  "selection_basis": "highest Q2_cv across 12 linear and 4 nonlinear evaluated models",
+  "Q2_cv": 0.8119744761107354,
+  "n_features": 8,
+  "features": [
+    "ABC",
+    "BCUTs-1h",
+    "C1SP2",
+    "ETA_shape_y",
+    "FilterItLogS",
+    "NdS",
+    "SlogP_VSA1",
+    "SlogP_VSA2"
+  ],
+  "hyperparameters": {},
+  "mccv": {
+    "n_iterations": 100,
+    "test_size": 0.2,
+    "base_random_state": 20260519,
+    "metrics": {
+      "R2_ext": {
+        "mean": 0.8064044467855591,
+        "sd": 0.032096688755069346,
+        "min": 0.7184601826336208,
+        "max": 0.8746029296868232
+      },
+      "RMSE_ext": {
+        "mean": 0.518388442968098,
+        "sd": 0.030136367756308395,
+        "min": 0.44667947256619517,
+        "max": 0.5854792440568296
+      },
+      "MAE_ext": {
+        "mean": 0.41850907183444547,
+        "sd": 0.0238587413935825,
+        "min": 0.3618417016000745,
+        "max": 0.47610602285653464
+      }
+    }
+  }
+}
