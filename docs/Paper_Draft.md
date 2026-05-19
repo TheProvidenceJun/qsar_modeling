@@ -70,6 +70,27 @@ Sixteen candidate models were evaluated under the strict eight-descriptor constr
 
 The highest-ranked model across the complete 16-model matrix was `Hierarchical_MC_MLR`, which achieved $Q^2_{cv} = 0.811974$ and is reported as $Q^2_{cv} = 0.812$ in the rounded manuscript summary. The model also achieved $R^2_{train} = 0.820182$, $CCC_{tr} = 0.901209$, $RMSE_{train} = 0.508648$, external $Q^2_{ext\ F2} = 0.814252$, $CCC_{ext} = 0.906043$, and $RMSE_{ext} = 0.510145$. On the basis of the strict $Q^2_{cv}$ ranking rule, `Hierarchical_MC_MLR` was designated the undisputed champion model. The selected descriptor subset consisted of `ABC`, `BCUTs-1h`, `C1SP2`, `ETA_shape_y`, `FilterItLogS`, `NdS`, `SlogP_VSA1`, and `SlogP_VSA2`.
 
+| Rank | Model | Regressor | $R^2_{train}$ | $Q^2_{cv}$ | $RMSE_{cv}$ | $Q^2_{ext\ F2}$ | $CCC_{ext}$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | `Hierarchical_MC_MLR` | MLR | 0.820 | 0.812 | 0.520 | 0.814 | 0.906 |
+| 2 | `Hierarchical_MC_PLS` | PLS | 0.818 | 0.812 | 0.520 | 0.817 | 0.907 |
+| 3 | `Hierarchical_GA_SVR` | SVR | 0.837 | 0.811 | 0.521 | 0.809 | 0.908 |
+| 4 | `Hierarchical_GA_PLS` | PLS | 0.816 | 0.807 | 0.527 | 0.820 | 0.910 |
+| 5 | `Hierarchical_GA_MLR` | MLR | 0.817 | 0.807 | 0.527 | 0.820 | 0.910 |
+| 6 | `SOM_MC_MLR` | MLR | 0.816 | 0.807 | 0.528 | 0.801 | 0.899 |
+| 7 | `SOM_MC_PLS` | PLS | 0.816 | 0.804 | 0.531 | 0.817 | 0.908 |
+| 8 | `SOM_GA_MLR` | MLR | 0.805 | 0.796 | 0.542 | 0.779 | 0.887 |
+| 9 | `SOM_GA_PLS` | PLS | 0.804 | 0.796 | 0.542 | 0.779 | 0.886 |
+| 10 | `Hierarchical_GA_RF` | RF | 0.966 | 0.794 | 0.544 | 0.826 | 0.912 |
+| 11 | `KMeans_MC_MLR` | MLR | 0.800 | 0.787 | 0.553 | 0.812 | 0.902 |
+| 12 | `Hierarchical_MC_RF` | RF | 0.972 | 0.787 | 0.554 | 0.816 | 0.906 |
+| 13 | `Hierarchical_MC_SVR` | SVR | 0.817 | 0.783 | 0.559 | 0.764 | 0.876 |
+| 14 | `KMeans_MC_PLS` | PLS | 0.790 | 0.775 | 0.569 | 0.793 | 0.894 |
+| 15 | `KMeans_GA_MLR` | MLR | 0.784 | 0.761 | 0.586 | 0.810 | 0.898 |
+| 16 | `KMeans_GA_PLS` | PLS | 0.769 | 0.751 | 0.598 | 0.796 | 0.890 |
+
+*Table 1: Comprehensive performance metrics for the 16 evaluated QSAR models, ranked by cross-validation robustness.*
+
 The closest linear competitor was `Hierarchical_MC_PLS`, which achieved $Q^2_{cv} = 0.811959$. The near-equivalent cross-validation score supports the stability of the Hierarchical-MC feature subset, while the slightly higher $Q^2_{cv}$ and training fit of `Hierarchical_MC_MLR` established the multiple linear regression variant as the final champion. The best non-linear competitor, `Hierarchical_GA_SVR`, achieved $Q^2_{cv} = 0.811248$, which was marginally lower than the champion model despite the additional flexibility of a kernel-based regression framework.
 
 The broader comparison between linear and non-linear candidates provided a central mechanistic insight. The random forest models showed very high apparent training fit, with $R^2_{train} = 0.965689$ for `Hierarchical_GA_RF` and $R^2_{train} = 0.971779$ for `Hierarchical_MC_RF`. Their cross-validation robustness was substantially lower, with $Q^2_{cv} = 0.794475$ and $Q^2_{cv} = 0.786824$, respectively. This large gap between training fit and cross-validated predictivity indicates overfitting by the high-capacity ensemble models. In contrast, the champion MLR model maintained close agreement between training fit and cross-validation performance, indicating that the dominant structure-property relationship for $logK_{oc}$ within the selected descriptor space was predominantly linear. The superior robustness of the parsimonious linear model suggests that excessive model capacity was not required to capture the principal chemical signal encoded by the eight selected descriptors.
@@ -96,9 +117,16 @@ The external validation series fell securely within the horizontal standardized 
 
 ![Figure 2: Williams Plot for Applicability Domain](../data/features/figure_williams_plot.png)
 
-*Figure 2: Williams Plot defining the applicability domain of the champion model using standardized residuals and leverage values.*
+*Figure 2: Williams Plot evaluating the applicability domain using standardized residuals and leverage (h\*).*
 
 The final benchmark comparison was performed against the Gramatica et al. (2014) Model 4 literature baseline under the identical eight-descriptor constraint. The historical model reported $R^2_{train} = 0.790$, $Q^2_{cv} = 0.780$, and external $R^2_{ext} = 0.794$. The present `Hierarchical_MC_MLR` champion model achieved $R^2_{train} = 0.820182$, $Q^2_{cv} = 0.811974$, and external $Q^2_{ext\ F2} = 0.814252$. The external improvement over the historical benchmark was 0.020252 in absolute $Q^2_{ext\ F2}$ units, while the descriptor budget remained fixed at eight descriptors.
+
+| Model | Algorithm | Descriptors | $R^2_{train}$ | $Q^2_{cv}$ | $Q^2_{ext\ F2}$ | MCCV $R^2$ Mean | $R^2_{y-sc}$ Mean | $\Delta Q^2_{ext\ F2}$ | Benchmark Exceeded |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Gramatica 2014 Model 4 | MLR | 8 | 0.790 | 0.780 | 0.794 |  |  | 0.000 | False |
+| `Hierarchical_MC_MLR` | MLR | 8 | 0.820 | 0.812 | 0.814 | 0.806 | 0.016 | 0.020 | True |
+
+*Table 2: Direct quantitative comparison between the historical baseline model and the proposed champion model.*
 
 The benchmark comparison confirms that the proposed feature-clustering and Monte Carlo selection strategy improved predictive performance without increasing model complexity. The improvement was accompanied by a defined endpoint, an unambiguous linear algorithm, a formally evaluated applicability domain, strong goodness-of-fit and robustness statistics, external predictivity exceeding the historical baseline, and a decisive Y-scrambling rejection of chance correlation. These validation outcomes collectively satisfy the five OECD principles for QSAR validation and support the regulatory credibility of the champion model.
 
