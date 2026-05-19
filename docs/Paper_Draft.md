@@ -32,6 +32,14 @@ To prevent information leakage, all statistical filtering decisions were fitted 
 
 The final filtered datasets consisted of 377 robust molecular descriptors, corresponding to 379 total columns after retaining `SMILES` and `logKoc`. These PyQSAR3-filtered matrices were saved as `data/features/filtered_train_pyqsar3.csv` and `data/features/filtered_test_pyqsar3.csv`, providing a noise-controlled feature space for downstream clustering and model development.
 
+### 2.5. Feature Space Clustering
+
+Following descriptor pre-filtering, unsupervised clustering was applied to the descriptor variables rather than to the chemical samples. This feature-space clustering strategy was used to group highly correlated and structurally similar molecular descriptors, thereby mitigating multicollinearity and organizing the retained descriptor space for subsequent PyQSAR3 feature selection. The procedure was conducted on the 377 filtered descriptors from the training set and was implemented using the native feature-clustering modules available in `pyqsar.model_tools`.
+
+Three complementary descriptor-clustering approaches were evaluated to provide alternative topological representations of the filtered feature space. Hierarchical descriptor clustering was performed using `FeatureCluster`, with a tuned distance cut yielding 20 feature clusters. K-Means descriptor clustering was performed using `FeatureCluster_KMeans`, configured to produce 20 feature clusters. Self-Organizing Map descriptor clustering was performed using `FeatureCluster_Minisom`; a 5x5 map was used, resulting in 25 feature clusters after assignment of the filtered descriptors to SOM units.
+
+All 377 retained descriptors were mapped to their corresponding feature-cluster labels for each of the three clustering strategies. These descriptor groupings were saved as `data/features/feature_clusters_pyqsar3.json`, together with native PyQSAR3 `.cluster` sidecar files. The resulting feature-cluster topologies provide the structural basis for the subsequent parallel multi-track genetic algorithm (GA) and Monte Carlo (MC) feature-selection engines, without introducing any sample-wise clustering or external test-set information into the feature-selection workflow.
+
 ## 3. Results
 
 ## 4. Discussion
