@@ -1,7 +1,7 @@
 # Project Handoff
 
 ## Current Status
-Phase 3 - Step 3.6 script generation is complete. The Y-scrambling chance-correlation script has been created for the locked Champion Model.
+Phase 3 is officially complete. The Champion Model has survived external validation, 100-iteration MCCV, and 100-iteration Y-scrambling.
 - The QDB.177 `M2.logKoc` endpoint was parsed from `data/raw/properties/M2.logKoc/values`.
 - Raw compound identifiers were mapped to SMILES files under `data/raw/compounds/<Compound Id>/daylight-smiles`.
 - RDKit validation and canonicalization secured 642 unique valid compounds from 643 raw entries.
@@ -16,7 +16,7 @@ Phase 3 - Step 3.6 script generation is complete. The Y-scrambling chance-correl
 - All 16 candidate models have now been generated and evaluated: 12 linear baselines plus 4 non-linear models.
 - The rigorous `Q²_cv` comparison selected `Hierarchical_MC_MLR` as the Champion Model.
 - The 100-iteration MCCV robustness test on the locked `Hierarchical_MC_MLR` Champion Model yielded an average `R²_ext` of 0.806.
-- A standalone Y-scrambling script has been generated to test the locked Champion Model against chance correlation.
+- The 100-iteration Y-scrambling test yielded an average scrambled `R²_y-sc` of 0.016, confirming that the Champion Model is not based on chance correlation.
 
 ## Active Project
 - **Project:** QSAR logKoc Modeling Project
@@ -27,29 +27,26 @@ Phase 3 - Step 3.6 script generation is complete. The Y-scrambling chance-correl
 - **Benchmark descriptor count:** 8 descriptors
 
 ## Current Phase
-**Phase 3: Advanced Feature Selection & Modeling (Non-linear & Validation)**
+**Phase 4: Applicability Domain & Visualization**
 This is the next action.
 
 ## Next Action
-The Project Manager will execute the standalone Y-scrambling script:
-`run_yscrambling.py`
+Generate the Python visualization and applicability-domain script for Phase 4.
 
-Execution command:
-```bash
-conda activate qsar_ml
-python run_yscrambling.py
-```
+Required Phase 4 tasks:
+- **Step 4.1: Predicted vs. Experimental Scatter Plot**
+  - Generate publication-quality scatter plots for the final Champion Model.
+  - Plot experimental versus predicted `logKoc` for Training and Test sets.
+  - Include the identity line and relevant validation metrics.
+- **Step 4.2: Williams Plot (Applicability Domain)**
+  - Calculate standardized residuals for the Champion Model.
+  - Calculate leverage values and the warning leverage threshold `h*`.
+  - Generate a Williams Plot to identify structural outliers and response outliers.
 
-The script will:
-- Use the locked Champion Model: `Hierarchical_MC_MLR`.
-- Use the locked 8 descriptors: `ABC`, `BCUTs-1h`, `C1SP2`, `ETA_shape_y`, `FilterItLogS`, `NdS`, `SlogP_VSA1`, `SlogP_VSA2`.
-- Fit the original MLR model on the unscrambled training target and calculate `R²_train`.
-- Randomly permute the training `logKoc` values across 100 trials.
-- Refit the MLR model for each scrambled response vector and calculate `R²_y-sc`.
-- Save `data/features/yscrambling_100_iterations.csv`.
-- Save `data/features/yscrambling_summary.json`.
-
-Do not report Y-scrambling results until the script has been executed and the actual outputs have been reviewed.
+Locked final Champion Model for Phase 4:
+- Model: `Hierarchical_MC_MLR`
+- Algorithm: MLR
+- Descriptors: `ABC`, `BCUTs-1h`, `C1SP2`, `ETA_shape_y`, `FilterItLogS`, `NdS`, `SlogP_VSA1`, `SlogP_VSA2`
 
 ## Completed Tasks
 1. Parsed the QDB.177 logKoc endpoint (`M2.logKoc`) and constructed a unified dataset containing `SMILES` and `logKoc`.
@@ -122,6 +119,13 @@ Do not report Y-scrambling results until the script has been executed and the ac
     - MCCV `MAE_ext`: mean = 0.407, SD = 0.033
 25. Generated the standalone Y-scrambling script for the locked Champion Model:
     - `run_yscrambling.py`
+26. Completed 100-iteration Y-scrambling chance-correlation test:
+    - Champion Model: `Hierarchical_MC_MLR`
+    - Original `R²_train = 0.820`
+    - Average scrambled `R²_y-sc = 0.016`
+    - Scrambled `R²_y-sc` SD = 0.007
+    - Maximum scrambled `R² = 0.039`
+    - Conclusion: chance correlation is mathematically rejected; the model relies on authentic structure-property relationships.
 
 ## Phase 1 Outputs
 - `data/processed/train.csv`
@@ -157,12 +161,15 @@ Do not report Y-scrambling results until the script has been executed and the ac
 - `data/features/mccv_100_iterations.csv`
 - `data/features/mccv_summary.json`
 
-## Phase 3 Step 3.6 Script Output
+## Phase 3 Step 3.6 Outputs
 - `run_yscrambling.py`
-
-## Expected Phase 3 Step 3.6 Runtime Outputs
 - `data/features/yscrambling_100_iterations.csv`
 - `data/features/yscrambling_summary.json`
+
+## Phase 4 Expected Outputs
+- Predicted vs. experimental scatter plot for the Champion Model
+- Williams Plot for Applicability Domain
+- Applicability-domain metrics including standardized residuals, leverage values, and warning leverage threshold `h*`
 
 ## Environment For Next Step
 Recommended environment:

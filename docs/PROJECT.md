@@ -119,6 +119,25 @@ Generate publication-quality visual diagnostics for the final Best Model.
 - Generate a Williams Plot to identify structural outliers and response outliers.
 - Interpret the Applicability Domain in relation to model reliability and external predictivity.
 
+### Step 4.3: Comprehensive QMRF Metric Integration & Benchmark (NEW)
+
+Synthesize and align all multi-track validation statistics into a unified, publication-ready master matrix to satisfy rigorous OECD QMRF specifications.
+
+1. **Dual-Architecture Synthesis (Linear vs. Non-Linear):**
+   - Import the 12 linear baseline results (MLR/PLS from Step 3.3) and the 4 non-linear advanced estimator results (SVR/RF from Step 3.4).
+   - Construct a symmetrical master benchmark table comparing all 16 models across 3 core dimensions: Goodness-of-Fit, Robustness (LMO), and Predictivity.
+
+2. **Champion Lock-in Statistics Extraction:**
+   - For the absolute winning combination (Hierarchical_MC_MLR), extract and append the exact 1,000-run Monte Carlo Cross-Validation (MCCV) statistical distributions denoted as Mean ± Standard Deviation ($SD$).
+   - Compute and log the final Y-Scrambling coefficient ($R^2_{y-sc}$) to confirm the model's structural resistance against chance correlation.
+
+3. **OECD QMRF Unified Metric Compliance Matrix:**
+   - Ensure the integrated DataFrame strictly computes and displays the following columns for cross-architecture verification:
+     - **Goodness-of-Fit:** $R^2_{train}$, $RMSE_{train}$, $CCC_{tr}$
+     - **Robustness (Internal CV):** $Q^2_{cv}$, $RMSE_{cv}$, $MAE_{cv}$, $CCC_{cv}$
+     - **Validation/Predictivity:** $Q^2_{ext\ F1}$, $Q^2_{ext\ F2}$, $Q^2_{ext\ F3}$, $RMSE_{ext}$, $MAE_{ext}$, $CCC_{ext}$
+     - **Reliability Safeguards:** $R^2_{y-sc}$ (Champion exclusive), MCCV Stability ($R^2_{ext} \pm SD$)
+
 ### Phase 5: Paper Draft & Repository Documentation
 Prepare formal documentation and manuscript-style outputs.
 - Draft `docs/Paper_Draft.md` (Intro to Supp Info).
