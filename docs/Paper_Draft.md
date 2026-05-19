@@ -90,6 +90,14 @@ Applicability domain analysis was performed using the Williams Plot diagnostics 
 
 The external validation series fell securely within the horizontal standardized residual boundaries and the vertical leverage threshold. The absence of major external compounds beyond the accepted response and structural limits indicates that the external test chemicals occupied the same applicability domain as the training set. This Williams Plot behavior supports compliance with OECD Principle 3, which requires a defined domain of applicability for QSAR predictions.
 
+![Figure 1: Predicted vs. Experimental logKoc](../data/features/figure_predicted_vs_experimental.png)
+
+*Figure 1: Predicted versus experimental logKoc values for the training and external test sets.*
+
+![Figure 2: Williams Plot for Applicability Domain](../data/features/figure_williams_plot.png)
+
+*Figure 2: Williams Plot defining the applicability domain of the champion model using standardized residuals and leverage values.*
+
 The final benchmark comparison was performed against the Gramatica et al. (2014) Model 4 literature baseline under the identical eight-descriptor constraint. The historical model reported $R^2_{train} = 0.790$, $Q^2_{cv} = 0.780$, and external $R^2_{ext} = 0.794$. The present `Hierarchical_MC_MLR` champion model achieved $R^2_{train} = 0.820182$, $Q^2_{cv} = 0.811974$, and external $Q^2_{ext\ F2} = 0.814252$. The external improvement over the historical benchmark was 0.020252 in absolute $Q^2_{ext\ F2}$ units, while the descriptor budget remained fixed at eight descriptors.
 
 The benchmark comparison confirms that the proposed feature-clustering and Monte Carlo selection strategy improved predictive performance without increasing model complexity. The improvement was accompanied by a defined endpoint, an unambiguous linear algorithm, a formally evaluated applicability domain, strong goodness-of-fit and robustness statistics, external predictivity exceeding the historical baseline, and a decisive Y-scrambling rejection of chance correlation. These validation outcomes collectively satisfy the five OECD principles for QSAR validation and support the regulatory credibility of the champion model.
@@ -113,3 +121,362 @@ QSAR DataBank. QDB.177 Archive. DOI: 10.15152/QDB.177.
 Organisation for Economic Co-operation and Development. *Guidance Document on the Validation of (Quantitative) Structure-Activity Relationship [(Q)SAR] Models*; OECD Series on Testing and Assessment, Number 69; OECD Environment Directorate: Paris, 2007.
 
 ## 6. Appendix
+
+```python
+# Phase 4 production workflow for final QSAR diagnostics and metric integration.
+# The code below was used to retrain the locked Hierarchical_MC_MLR champion model,
+# generate the predicted-versus-experimental plot, generate the Williams Plot, and
+# compile the 16-model comprehensive metrics table with MCCV and Y-scrambling fields.
+
+from pathlib import Path
+import json
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+
+# Configure tabular display for notebook inspection.
+pd.set_option("display.max_columns", 120)
+pd.set_option("display.width", 160)
+
+# Resolve the project root robustly for execution from either the repository root
+# or the notebooks directory.
+PROJECT_ROOT = Path.cwd()
+if not (PROJECT_ROOT / "data" / "features").exists():
+    PROJECT_ROOT = PROJECT_ROOT.parent
+DATA_DIR = PROJECT_ROOT / "data" / "features"
+
+# Define all Phase 4 input and output paths.
+TRAIN_PATH = DATA_DIR / "filtered_train_pyqsar3.csv"
+TEST_PATH = DATA_DIR / "filtered_test_pyqsar3.csv"
+MCCV_SUMMARY_PATH = DATA_DIR / "mccv_summary.json"
+LINEAR_METRICS_PATH = DATA_DIR / "12_model_extended_metrics.csv"
+NONLINEAR_METRICS_PATH = DATA_DIR / "nonlinear_model_metrics.csv"
+YSCRAMBLING_SUMMARY_PATH = DATA_DIR / "yscrambling_summary.json"
+
+PRED_FIG_PATH = DATA_DIR / "figure_predicted_vs_experimental.png"
+WILLIAMS_FIG_PATH = DATA_DIR / "figure_williams_plot.png"
+MASTER_METRICS_PATH = DATA_DIR / "final_comprehensive_metrics.csv"
+
+# Fail early if any required upstream artifact is absent.
+required_paths = [
+    TRAIN_PATH,
+    TEST_PATH,
+    MCCV_SUMMARY_PATH,
+    LINEAR_METRICS_PATH,
+    NONLINEAR_METRICS_PATH,
+    YSCRAMBLING_SUMMARY_PATH,
+]
+for path in required_paths:
+    if not path.exists():
+        raise FileNotFoundError(f"Required input file is missing: {path}")
+
+# Load the filtered descriptor matrices and validation summaries.
+train_df = pd.read_csv(TRAIN_PATH)
+test_df = pd.read_csv(TEST_PATH)
+
+with MCCV_SUMMARY_PATH.open("r", encoding="utf-8") as handle:
+    mccv_summary = json.load(handle)
+
+with YSCRAMBLING_SUMMARY_PATH.open("r", encoding="utf-8") as handle:
+    yscrambling_summary = json.load(handle)
+
+# Recover the locked champion definition from the MCCV summary.
+champion_model = mccv_summary.get("champion_model", "Hierarchical_MC_MLR")
+champion_algorithm = mccv_summary.get("algorithm", "MLR")
+champion_features = mccv_summary["features"]
+
+if champion_model != "Hierarchical_MC_MLR":
+    raise ValueError(f"Unexpected champion model in MCCV summary: {champion_model}")
+if champion_algorithm != "MLR":
+    raise ValueError(f"Unexpected champion algorithm in MCCV summary: {champion_algorithm}")
+if len(champion_features) != 8:
+    raise ValueError(f"Expected exactly eight champion descriptors, found {len(champion_features)}")
+
+missing_train = sorted(set(champion_features) - set(train_df.columns))
+missing_test = sorted(set(champion_features) - set(test_df.columns))
+if missing_train or missing_test:
+    raise ValueError(f"Champion descriptors missing. Train: {missing_train}; Test: {missing_test}")
+
+# Prepare the locked training and external validation matrices.
+X_train = train_df[champion_features].to_numpy(dtype=float)
+y_train = train_df["logKoc"].to_numpy(dtype=float)
+X_test = test_df[champion_features].to_numpy(dtype=float)
+y_test = test_df["logKoc"].to_numpy(dtype=float)
+
+# Retrain the final champion MLR model using the locked descriptor set.
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+train_pred = model.predict(X_train)
+test_pred = model.predict(X_test)
+
+
+def rmse(y_true, y_pred):
+    """Return root mean squared error as a plain float."""
+    return float(np.sqrt(mean_squared_error(y_true, y_pred)))
+
+
+train_r2 = float(r2_score(y_train, train_pred))
+test_r2 = float(r2_score(y_test, test_pred))
+train_rmse = rmse(y_train, train_pred)
+test_rmse = rmse(y_test, test_pred)
+train_mae = float(mean_absolute_error(y_train, train_pred))
+test_mae = float(mean_absolute_error(y_test, test_pred))
+
+print(f"Champion model: {champion_model} ({champion_algorithm})")
+print(f"Champion descriptors ({len(champion_features)}): {champion_features}")
+print(f"Train: R2={train_r2:.4f}, RMSE={train_rmse:.4f}, MAE={train_mae:.4f}")
+print(f"Test:  R2={test_r2:.4f}, RMSE={test_rmse:.4f}, MAE={test_mae:.4f}")
+
+# Generate the predicted-versus-experimental figure for training and test series.
+plt.style.use("seaborn-v0_8-whitegrid")
+
+all_exp = np.concatenate([y_train, y_test])
+all_pred = np.concatenate([train_pred, test_pred])
+plot_min = float(min(all_exp.min(), all_pred.min()))
+plot_max = float(max(all_exp.max(), all_pred.max()))
+padding = 0.06 * (plot_max - plot_min)
+lims = (plot_min - padding, plot_max + padding)
+
+fig, ax = plt.subplots(figsize=(7.2, 6.4), dpi=150)
+ax.scatter(
+    y_train,
+    train_pred,
+    s=46,
+    alpha=0.78,
+    c="#1f77b4",
+    edgecolor="white",
+    linewidth=0.45,
+    label=f"Training (n={len(y_train)})",
+)
+ax.scatter(
+    y_test,
+    test_pred,
+    s=58,
+    alpha=0.86,
+    marker="^",
+    c="#d62728",
+    edgecolor="white",
+    linewidth=0.45,
+    label=f"External test (n={len(y_test)})",
+)
+ax.plot(lims, lims, color="#222222", linestyle="--", linewidth=1.3, label="Identity line")
+
+metrics_text = (
+    f"Train $R^2$ = {train_r2:.3f}\n"
+    f"Train RMSE = {train_rmse:.3f}\n"
+    f"Test $R^2$ = {test_r2:.3f}\n"
+    f"Test RMSE = {test_rmse:.3f}"
+)
+ax.text(
+    0.04,
+    0.96,
+    metrics_text,
+    transform=ax.transAxes,
+    va="top",
+    ha="left",
+    fontsize=10,
+    bbox={"boxstyle": "round,pad=0.35", "facecolor": "white", "edgecolor": "#bdbdbd", "alpha": 0.92},
+)
+
+ax.set_xlim(lims)
+ax.set_ylim(lims)
+ax.set_xlabel("Experimental logKoc", fontsize=12)
+ax.set_ylabel("Predicted logKoc", fontsize=12)
+ax.set_title("Predicted vs. Experimental logKoc: Hierarchical_MC_MLR", fontsize=13, weight="bold")
+ax.legend(frameon=True, loc="lower right")
+ax.grid(True, color="#d9d9d9", linewidth=0.75)
+fig.tight_layout()
+fig.savefig(PRED_FIG_PATH, dpi=300, bbox_inches="tight")
+plt.show()
+
+print(f"Saved predicted-versus-experimental figure to: {PRED_FIG_PATH}")
+
+# Calculate leverage values and standardized residuals for Williams Plot analysis.
+def design_matrix(values):
+    """Add an intercept column to a numerical descriptor matrix."""
+    return np.column_stack([np.ones(values.shape[0]), values])
+
+
+p = len(champion_features)
+n_train = X_train.shape[0]
+
+X_design_train = design_matrix(X_train)
+X_design_test = design_matrix(X_test)
+xtx_inv = np.linalg.pinv(X_design_train.T @ X_design_train)
+
+train_leverage = np.einsum("ij,jk,ik->i", X_design_train, xtx_inv, X_design_train)
+test_leverage = np.einsum("ij,jk,ik->i", X_design_test, xtx_inv, X_design_test)
+h_star = 3 * (p + 1) / n_train
+
+train_residuals = y_train - train_pred
+test_residuals = y_test - test_pred
+residual_se = np.sqrt(np.sum(train_residuals ** 2) / (n_train - p - 1))
+
+if residual_se <= 0:
+    raise ValueError("Training residual standard error must be positive for standardized residuals.")
+
+train_std_residuals = train_residuals / residual_se
+test_std_residuals = test_residuals / residual_se
+
+# Generate the Williams Plot for applicability-domain assessment.
+max_h = float(max(train_leverage.max(), test_leverage.max(), h_star))
+xmax = max_h * 1.12
+
+fig, ax = plt.subplots(figsize=(7.6, 6.2), dpi=150)
+ax.scatter(
+    train_leverage,
+    train_std_residuals,
+    s=44,
+    alpha=0.78,
+    c="#1f77b4",
+    edgecolor="white",
+    linewidth=0.45,
+    label=f"Training (n={len(y_train)})",
+)
+ax.scatter(
+    test_leverage,
+    test_std_residuals,
+    s=58,
+    alpha=0.86,
+    marker="^",
+    c="#d62728",
+    edgecolor="white",
+    linewidth=0.45,
+    label=f"External test (n={len(y_test)})",
+)
+
+ax.axhline(3, color="#444444", linestyle="--", linewidth=1.2, label="Residual threshold (+/-3)")
+ax.axhline(-3, color="#444444", linestyle="--", linewidth=1.2)
+ax.axhline(0, color="#9e9e9e", linestyle=":", linewidth=1.0)
+ax.axvline(h_star, color="#7f3c8d", linestyle="-.", linewidth=1.4, label=f"Warning leverage h* = {h_star:.3f}")
+
+all_std = np.concatenate([train_std_residuals, test_std_residuals])
+y_abs = max(3.3, float(np.nanmax(np.abs(all_std))) * 1.15)
+ax.set_xlim(0, xmax)
+ax.set_ylim(-y_abs, y_abs)
+ax.set_xlabel("Leverage (h)", fontsize=12)
+ax.set_ylabel("Standardized residual", fontsize=12)
+ax.set_title("Williams Plot: Applicability Domain of Hierarchical_MC_MLR", fontsize=13, weight="bold")
+ax.legend(frameon=True, loc="best")
+ax.grid(True, color="#d9d9d9", linewidth=0.75)
+fig.tight_layout()
+fig.savefig(WILLIAMS_FIG_PATH, dpi=300, bbox_inches="tight")
+plt.show()
+
+print(f"Saved Williams Plot to: {WILLIAMS_FIG_PATH}")
+print(f"Warning leverage h*: {h_star:.6f}")
+print(f"Training leverage range: {train_leverage.min():.6f} to {train_leverage.max():.6f}")
+print(f"Test leverage range: {test_leverage.min():.6f} to {test_leverage.max():.6f}")
+print(f"Training standardized residual range: {train_std_residuals.min():.3f} to {train_std_residuals.max():.3f}")
+print(f"Test standardized residual range: {test_std_residuals.min():.3f} to {test_std_residuals.max():.3f}")
+
+# Merge the 12 linear and four non-linear model records into a final master table.
+linear_metrics = pd.read_csv(LINEAR_METRICS_PATH)
+nonlinear_metrics = pd.read_csv(NONLINEAR_METRICS_PATH)
+
+metric_cols = [
+    "R2_train",
+    "CCC_tr",
+    "RMSE_train",
+    "Q2_cv",
+    "CCC_cv",
+    "RMSE_cv",
+    "MAE_cv",
+    "Q2_ext_F1",
+    "Q2_ext_F2",
+    "Q2_ext_F3",
+    "CCC_ext",
+    "RMSE_ext",
+    "MAE_ext",
+]
+
+linear_master = linear_metrics.copy()
+linear_master["Model_Family"] = "Linear"
+linear_master["Best_Params"] = "{}"
+
+nonlinear_master = nonlinear_metrics.rename(
+    columns={
+        "model": "Model_ID",
+        "selector": "Selector",
+        "model_type": "Regressor",
+        "n_features": "N_Selected_Features",
+        "selected_features": "Selected_Features",
+        "best_params": "Best_Params",
+    }
+).copy()
+nonlinear_master["Model_Family"] = "Nonlinear"
+nonlinear_master["Track"] = nonlinear_master["Model_ID"].str.split("_").str[0]
+nonlinear_master["Cluster_File"] = "feature_clusters_pyqsar3_hierarchical.cluster"
+
+base_cols = [
+    "Model_ID",
+    "Model_Family",
+    "Track",
+    "Selector",
+    "Regressor",
+    "Cluster_File",
+    "N_Selected_Features",
+    "Selected_Features",
+    "Best_Params",
+]
+
+for frame_name, frame in [("linear", linear_master), ("nonlinear", nonlinear_master)]:
+    missing = sorted(set(base_cols + metric_cols) - set(frame.columns))
+    if missing:
+        raise ValueError(f"Missing columns in {frame_name} metrics: {missing}")
+
+master_metrics = pd.concat(
+    [linear_master[base_cols + metric_cols], nonlinear_master[base_cols + metric_cols]],
+    ignore_index=True,
+)
+
+# Add MCCV and Y-scrambling metrics only to the locked champion row.
+mccv_metrics = mccv_summary.get("mccv", {}).get("metrics", {})
+master_metrics["MCCV_R2_ext_Mean"] = np.nan
+master_metrics["MCCV_R2_ext_SD"] = np.nan
+master_metrics["MCCV_RMSE_ext_Mean"] = np.nan
+master_metrics["MCCV_RMSE_ext_SD"] = np.nan
+master_metrics["MCCV_MAE_ext_Mean"] = np.nan
+master_metrics["MCCV_MAE_ext_SD"] = np.nan
+master_metrics["Y_Scramble_R2_Mean"] = np.nan
+master_metrics["Y_Scramble_R2_SD"] = np.nan
+master_metrics["Y_Scramble_R2_Max"] = np.nan
+master_metrics["Champion_Features_Locked"] = ""
+
+champion_mask = master_metrics["Model_ID"].eq(champion_model)
+if champion_mask.sum() != 1:
+    raise ValueError(f"Expected exactly one champion row for {champion_model}; found {champion_mask.sum()}")
+
+master_metrics.loc[champion_mask, "MCCV_R2_ext_Mean"] = mccv_metrics["R2_ext"]["mean"]
+master_metrics.loc[champion_mask, "MCCV_R2_ext_SD"] = mccv_metrics["R2_ext"]["sd"]
+master_metrics.loc[champion_mask, "MCCV_RMSE_ext_Mean"] = mccv_metrics["RMSE_ext"]["mean"]
+master_metrics.loc[champion_mask, "MCCV_RMSE_ext_SD"] = mccv_metrics["RMSE_ext"]["sd"]
+master_metrics.loc[champion_mask, "MCCV_MAE_ext_Mean"] = mccv_metrics["MAE_ext"]["mean"]
+master_metrics.loc[champion_mask, "MCCV_MAE_ext_SD"] = mccv_metrics["MAE_ext"]["sd"]
+master_metrics.loc[champion_mask, "Y_Scramble_R2_Mean"] = yscrambling_summary["average_R2_y_sc"]
+master_metrics.loc[champion_mask, "Y_Scramble_R2_SD"] = yscrambling_summary["sd_R2_y_sc"]
+master_metrics.loc[champion_mask, "Y_Scramble_R2_Max"] = yscrambling_summary["max_R2_y_sc"]
+master_metrics.loc[champion_mask, "Champion_Features_Locked"] = ";".join(champion_features)
+
+# Rank the integrated table by the model-selection criterion used throughout the project.
+master_metrics = master_metrics.sort_values(
+    by=["Q2_cv", "Q2_ext_F2", "R2_train"],
+    ascending=[False, False, False],
+).reset_index(drop=True)
+master_metrics.insert(0, "Rank_By_Q2_cv", np.arange(1, len(master_metrics) + 1))
+
+master_metrics.to_csv(MASTER_METRICS_PATH, index=False)
+print(f"Saved comprehensive 16-model metrics table to: {MASTER_METRICS_PATH}")
+print(f"Master table shape: {master_metrics.shape}")
+
+# Confirm that all required Phase 4 outputs were created.
+for output_path in [PRED_FIG_PATH, WILLIAMS_FIG_PATH, MASTER_METRICS_PATH]:
+    if not output_path.exists():
+        raise FileNotFoundError(f"Expected output was not created: {output_path}")
+    print(f"Created: {output_path} ({output_path.stat().st_size:,} bytes)")
+```
