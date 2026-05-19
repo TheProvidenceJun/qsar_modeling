@@ -42,8 +42,35 @@ All 377 retained descriptors were mapped to their corresponding feature-cluster 
 
 ## 3. Results
 
-## 4. Discussion
+### 3.1. Feature Selection and Internal Performance Evaluation
 
-## 5. Conclusion
+The baseline linear modeling stage was executed as a systematic 12-model matrix in which three descriptor-clustering spaces were coupled with two PyQSAR3 feature-selection engines and two linear regression algorithms. Hierarchical, K-Means, and Self-Organizing Map feature spaces were each supplied to the native PyQSAR3 Genetic Algorithm (GA) and Monte Carlo (MC) feature-selection engines. Each selected descriptor subset was then evaluated using multiple linear regression (MLR) and partial least squares (PLS), yielding twelve baseline linear models. In accordance with the descriptor count reported for the Gramatica et al. (2014) benchmark model, all feature-selection paths were strictly constrained to select exactly eight molecular descriptors.
 
-## 6. References
+The internally fitted models exhibited strong goodness-of-fit across the full matrix. The highest training coefficients of determination were observed for the Hierarchical-MC models (`R²_train = 0.820` for MLR and `R²_train = 0.818` for PLS), followed closely by the Hierarchical-GA and SOM-MC pathways. These values indicate that the eight-descriptor subsets retained substantial explanatory capacity despite the strong parsimony constraint imposed on the feature-selection process.
+
+Internal robustness was evaluated using 5-fold cross-validation, with cross-validated predictions summarized through `Q²_cv`, `CCC_cv`, `RMSE_cv`, and `MAE_cv`. The Hierarchical-MC track demonstrated particularly high internal stability, reaching `Q²_cv = 0.812` and `CCC_cv = 0.897` for both MLR and PLS variants. The Hierarchical-GA track also showed strong robustness, with both MLR and PLS models achieving `Q²_cv = 0.807` and `CCC_cv = 0.894`. The consistency between training performance and cross-validated predictivity suggests that the descriptor-cluster-guided search produced stable eight-variable baseline models rather than overparameterized fitting artifacts.
+
+### 3.2. External Predictivity of Baseline Linear Models
+
+The twelve baseline linear models were next evaluated on the external test set using a comprehensive validation framework. External predictivity was quantified using three complementary external predictive coefficients (`Q²_ext F1`, `Q²_ext F2`, and `Q²_ext F3`), together with the external concordance correlation coefficient (`CCC_ext`), `RMSE_ext`, and `MAE_ext`. The full extended performance matrix is reported below, ranked by `Q²_ext F2`, which is equivalent to the standard external test-set coefficient of determination.
+
+| Rank | Model | Q²_ext F2 | Q²_ext F1 | Q²_ext F3 | CCC_ext | RMSE_ext | MAE_ext | Q²_cv | CCC_cv | R²_train |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | Hierarchical_GA_PLS | 0.820 | 0.820 | 0.825 | 0.910 | 0.502 | 0.405 | 0.807 | 0.894 | 0.816 |
+| 2 | Hierarchical_GA_MLR | 0.820 | 0.820 | 0.824 | 0.910 | 0.503 | 0.404 | 0.807 | 0.894 | 0.817 |
+| 3 | SOM_MC_PLS | 0.817 | 0.817 | 0.822 | 0.908 | 0.506 | 0.383 | 0.804 | 0.893 | 0.816 |
+| 4 | Hierarchical_MC_PLS | 0.817 | 0.817 | 0.821 | 0.907 | 0.507 | 0.397 | 0.812 | 0.897 | 0.818 |
+| 5 | Hierarchical_MC_MLR | 0.814 | 0.814 | 0.819 | 0.906 | 0.510 | 0.397 | 0.812 | 0.897 | 0.820 |
+| 6 | KMeans_MC_MLR | 0.812 | 0.812 | 0.817 | 0.902 | 0.513 | 0.396 | 0.787 | 0.882 | 0.800 |
+| 7 | KMeans_GA_MLR | 0.810 | 0.810 | 0.815 | 0.898 | 0.515 | 0.413 | 0.761 | 0.867 | 0.784 |
+| 8 | SOM_MC_MLR | 0.801 | 0.801 | 0.806 | 0.899 | 0.528 | 0.406 | 0.807 | 0.894 | 0.816 |
+| 9 | KMeans_GA_PLS | 0.796 | 0.796 | 0.801 | 0.890 | 0.535 | 0.420 | 0.751 | 0.861 | 0.769 |
+| 10 | KMeans_MC_PLS | 0.793 | 0.794 | 0.799 | 0.894 | 0.538 | 0.416 | 0.775 | 0.875 | 0.790 |
+| 11 | SOM_GA_PLS | 0.779 | 0.779 | 0.785 | 0.886 | 0.556 | 0.428 | 0.796 | 0.887 | 0.804 |
+| 12 | SOM_GA_MLR | 0.779 | 0.779 | 0.785 | 0.887 | 0.556 | 0.427 | 0.796 | 0.887 | 0.805 |
+
+External predictivity varied across descriptor-clustering and feature-selection strategies, indicating that the topology imposed on the descriptor space had a measurable influence on the generalization capacity of the resulting linear models. The Hierarchical-GA pathway produced the strongest external predictivity among the baseline linear models, with both PLS and MLR variants achieving `Q²_ext F2 = 0.820` and `CCC_ext = 0.910`. Several additional models also exceeded or closely approached this performance range, including SOM-MC-PLS (`Q²_ext F2 = 0.817`) and the Hierarchical-MC models (`Q²_ext F2 = 0.817` for PLS and `0.814` for MLR).
+
+Importantly, multiple eight-descriptor linear baselines surpassed the historical Gramatica et al. (2014) external benchmark of `R²_ext = 0.794`. This included both Hierarchical-GA models and several MC-driven pathways, demonstrating that the feature-cluster-guided PyQSAR3 workflow can produce externally predictive, highly parsimonious linear models under the same descriptor-count constraint as the reference model. At the same time, the results are interpreted here as baseline linear-model performance rather than final model selection, because additional non-linear and ensemble modeling expansions remain planned.
+
+Overall, the high external predictive coefficients, strong concordance values, and limited gaps between internal and external metrics indicate that the eight-descriptor linear baselines provide a robust benchmarking foundation. These results justify subsequent investigation of non-linear or ensemble modeling frameworks, such as Support Vector Regression and Random Forests, to determine whether additional non-linear structure-property relationships can be captured beyond the current linear descriptor representations.

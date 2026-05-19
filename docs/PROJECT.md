@@ -44,45 +44,75 @@ Extract raw molecular descriptors in the `mordred` environment.
 - **CRITICAL RULE 1:** Do NOT filter columns (e.g., NaNs, zero-variance) in this phase.
 - **CRITICAL RULE 2 (Reference):** Strictly refer to `examples/example_mordred/example_mordred.md` for syntax and best practices before writing the notebook.
 
-### Phase 3: Feature Filtering & Multi-Track PyQSAR3 Modeling
+### Phase 3: Advanced Feature Selection & Modeling (Non-linear & Validation)
 
-Perform strict descriptor clustering, multi-track feature selection, and train linear statistical models natively within the py3 environment.
+Perform strict preprocessing, descriptor clustering, linear baseline modeling, server-side non-linear expansion, and robustness validation under the Gramatica et al. 2014 8-descriptor constraint.
 
-#### 1. Feature Filtering & Common Preprocessing
-- **Basic Filters:** Apply strict preprocessing filters (remove NaNs, zero-variance, high correlation descriptors) strictly using the Training set only. Transform the Test set accordingly to prevent data leakage.
-- **3-Track Clustering Evaluation:** Apply three distinct clustering methods to the filtered training features to handle multicollinearity:
-  1) Hierarchical Clustering
-  2) K-Means Clustering
-  3) SOM (Self-Organizing Maps) *[Note: Use native pyqsar3 or sklearn approximation if SOM is constrained]*
-- **Silhouette Scoring:** Compute the Silhouette Score for all three clustering tracks to evaluate group structural quality.
+**Feature Constraint:** All GA and MC feature-selection runs in this phase MUST be constrained to select exactly **8 descriptors**, matching the descriptor count used in the Gramatica et al. 2014 benchmark model. Any exploratory run using a different descriptor count is non-production and must not be reported as the primary benchmark comparison.
 
-#### 2. Multi-Track PyQSAR3 Execution Matrix (12 Models)
-Feed each of the 3 cluster datasets into the coupled pyqsar3 selection-modeling engines. Execute both Feature Selection and Model Building simultaneously for all 12 combinations:
-- **Hierarchical Track (4 Models):**
-  - Cluster-GA ➔ MLR, PLS
-  - Cluster-MC ➔ MLR, PLS
-- **K-Means Track (4 Models):**
-  - Cluster-GA ➔ MLR, PLS
-  - Cluster-MC ➔ MLR, PLS
-- **SOM Track (4 Models):**
-  - Cluster-GA ➔ MLR, PLS
-  - Cluster-MC ➔ MLR, PLS
+**OECD Evaluation Metrics Framework:** Every generated production model must report the following metrics:
+- **Internal Goodness-of-fit:** $R^2_{train}$, $CCC_{tr}$, $RMSE_{train}$
+- **Internal Robustness (5-Fold CV):** $Q^2_{cv}$, $CCC_{cv}$, $RMSE_{cv}$, $MAE_{cv}$
+- **External Predictivity (Test Set):** $Q^2_{ext\ F1}$, $Q^2_{ext\ F2}$, $Q^2_{ext\ F3}$, $CCC_{ext}$, $RMSE_{ext}$, $MAE_{ext}$
+- **Chance Correlation:** $R^2_{y-sc}$ by Y-scrambling, performed only on the final Best Model
 
-#### 3. Validation & Model Selection
-- **Internal Cross-Validation:** Evaluate all 12 coupled pipelines using 5-Fold Cross-Validation ($Q^2$ or $R^2_{cv}$) exclusively on the training folds.
-- **External Evaluation:** Validate predictions on the split Test set ($R^2_{ext}$, RMSE).
-- **Winning Track Selection:** Compare metrics to find the Absolute Winner among the 12 models.
-- **Optional Advanced ML Expansion:** (Optional) Extract the optimal feature indices from the winning clustering track, and feed them into external SVR and Random Forest models with hyperparameter tuning to benchmark linear vs. non-linear performance.
+#### Step 3.1 - Step 3.3: Completed Data Preparation, Feature Clustering, and Linear Baseline Matrix
+- Step 3.1 completed native PyQSAR3-compatible pre-filtering using training-set-only filtering decisions.
+- Step 3.2 completed native PyQSAR3 descriptor/feature clustering using Hierarchical, K-Means, and SOM tracks.
+- Step 3.3 completed the 12-model linear baseline matrix under the strict 8-descriptor constraint:
+  - 3 descriptor-clustering tracks: Hierarchical, K-Means, SOM
+  - 2 feature-selection engines: GA and MC
+  - 2 linear regressors: MLR and PLS
+
+#### Step 3.4: Server-Side Non-linear Modeling Script
+Execute SVR and Random Forest models through a standalone Python script, not a Jupyter notebook.
+- **Script target:** `run_nonlinear_models.py`
+- **Execution environment:** `qsar_ml`
+- **Parallelization:** Use multiprocessing with `max(1, total_cores - 2)` workers to preserve server responsiveness.
+- **Scope:** Focus strictly on the Hierarchical feature-cluster track.
+- **Feature selection:** Couple GA and MC feature-selection strategies with SVR and RF modeling, constrained to exactly 8 descriptors.
+- **Hyperparameter tuning:** Use rigorous `GridSearchCV` for SVR and RF hyperparameters.
+- **Required outputs:**
+  - `data/features/best_nonlinear_config.json`
+  - `data/features/nonlinear_model_metrics.csv`
+  - `data/features/nonlinear_search_log.txt`
+- **Required metric columns for `nonlinear_model_metrics.csv`:**
+  - $R^2_{train}$, $CCC_{tr}$, $RMSE_{train}$
+  - $Q^2_{cv}$, $CCC_{cv}$, $RMSE_{cv}$, $MAE_{cv}$
+  - $Q^2_{ext\ F1}$, $Q^2_{ext\ F2}$, $Q^2_{ext\ F3}$
+  - $CCC_{ext}$, $RMSE_{ext}$, $MAE_{ext}$
+
+#### Step 3.5: MCCV (Monte Carlo Cross-Validation)
+Select the absolute Best Model among the 16 evaluated production candidates:
+- 12 linear baseline models from Step 3.3
+- 4 non-linear models from Step 3.4: GA-SVR, GA-RF, MC-SVR, MC-RF
+
+After selection, lock the Best Model's 8 descriptors and optimal hyperparameters. Perform 100 random Train/Test splits to quantify robustness across repeated resampling. Report the full internal and external metric suite for the MCCV distribution, including mean, standard deviation, and relevant confidence intervals where appropriate.
+
+#### Step 3.6: Y-Scrambling
+Perform chance-correlation analysis on the final Best Model only.
+- Randomly permute the training response vector across repeated scrambling trials.
+- Refit the locked modeling pipeline under each scrambled response condition.
+- Report $R^2_{y-sc}$ and compare scrambled performance against the non-scrambled Best Model to demonstrate that the final model is not attributable to chance correlation.
 
 #### CRITICAL RULE (Reference)
-Strictly refer to `examples/example_pyqsar3/example_pyqsar3.md` to map the exact native syntax for clustering integration and GA/MC engine invocation before writing the production notebook cells.
+Strictly refer to `examples/example_pyqsar3/example_pyqsar3.md` to map the exact native syntax for PyQSAR3 preprocessing, clustering integration, and GA/MC engine invocation before writing production notebook cells or scripts that consume PyQSAR3 artifacts.
 
 
-### Phase 4: External Validation & Applicability Domain
-Evaluate the selected model on the external test set.
-- Calculate external validation metrics (R²_ext, RMSE, MAE, CCC).
-- Compare performance against the original Gramatica 2014 benchmark.
-- Draw a Williams Plot and assess Applicability Domain.
+### Phase 4: Applicability Domain & Visualization
+Generate publication-quality visual diagnostics for the final Best Model.
+
+#### Step 4.1: Predicted vs. Experimental Plot
+- Generate publication-quality scatter plots comparing experimental and predicted logKoc values for the final Best Model.
+- Plot Training and Test predictions with clear visual separation.
+- Include the identity line, fitted trend if appropriate, and the final model's key validation metrics.
+- Export figures in publication-ready formats suitable for manuscript and repository documentation.
+
+#### Step 4.2: Williams Plot (Applicability Domain)
+- Calculate standardized residuals for the final Best Model.
+- Calculate hat leverage values and the warning leverage threshold $h^*$.
+- Generate a Williams Plot to identify structural outliers and response outliers.
+- Interpret the Applicability Domain in relation to model reliability and external predictivity.
 
 ### Phase 5: Paper Draft & Repository Documentation
 Prepare formal documentation and manuscript-style outputs.
