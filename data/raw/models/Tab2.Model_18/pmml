@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M18.MP" displayName="Melting point" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/minHBd" displayName="The minimum E-State energy for hydrogen bond donors" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/PubchemFP572" displayName="N:C:N:C These bits test for the presence of simple SMARTS patterns, regardless of count, but where bond orders are specific and bond aromaticity matches both single and double bonds." optype="continuous" dataType="double"/>
+        <DataField name="descriptors/minssssC" displayName="Minimum atom-type E-State: &gt;C&lt;" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nTRing" displayName="Number of rings (includes counts from fused rings)" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M18.MP">
+        <MiningSchema>
+            <MiningField name="properties/M18.MP" usageType="predicted"/>
+            <MiningField name="descriptors/minHBd" usageType="active"/>
+            <MiningField name="descriptors/PubchemFP572" usageType="active"/>
+            <MiningField name="descriptors/minssssC" usageType="active"/>
+            <MiningField name="descriptors/nTRing" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="-41.1954">
+            <NumericPredictor name="descriptors/minHBd" coefficient="201.4144"/>
+            <NumericPredictor name="descriptors/PubchemFP572" coefficient="63.1085"/>
+            <NumericPredictor name="descriptors/minssssC" coefficient="16.6005"/>
+            <NumericPredictor name="descriptors/nTRing" coefficient="27.434"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

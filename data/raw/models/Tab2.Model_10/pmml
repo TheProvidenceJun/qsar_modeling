@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M10.MP" displayName="Melting Point" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/SC-5" displayName="Simple cluster, order 5" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M10.MP">
+        <MiningSchema>
+            <MiningField name="properties/M10.MP" usageType="predicted"/>
+            <MiningField name="descriptors/SC-5" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="45.0154">
+            <NumericPredictor name="descriptors/SC-5" coefficient="194.9478"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

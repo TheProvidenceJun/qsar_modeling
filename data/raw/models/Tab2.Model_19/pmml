@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M19.logSw" displayName="Water solubility" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/SCH-5" displayName="Simple chain, order 5" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/SP-1" displayName="Simple path, order 1" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nHBAcc2" displayName="Number of hydrogen bond acceptors (any oxygen; any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge &lt;= 0) except a non-aromatic nitrogen that is adjacent to an oxygen and aromatic ring, or an aromatic nitrogen with a hydrogen atom in a ring, or an aromatic nitrogen with 3 neighouring atoms in a ring, or a nitrogen with total bond order &gt;=4; any fluorine)" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M19.logSw">
+        <MiningSchema>
+            <MiningField name="properties/M19.logSw" usageType="predicted"/>
+            <MiningField name="descriptors/SCH-5" usageType="active"/>
+            <MiningField name="descriptors/SP-1" usageType="active"/>
+            <MiningField name="descriptors/nHBAcc2" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="4.8448">
+            <NumericPredictor name="descriptors/SCH-5" coefficient="7.306"/>
+            <NumericPredictor name="descriptors/SP-1" coefficient="-0.5906"/>
+            <NumericPredictor name="descriptors/nHBAcc2" coefficient="0.3524"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

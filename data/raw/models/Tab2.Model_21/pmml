@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M21.pEC50" displayName="Inhibition of the exponential growth rate of algea" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/SwHBa" displayName="Sum of E-States for weak Hydrogen Bond acceptors" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/MDEN-22" displayName="Molecular distance edge between all secondary nitrogens" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/WPOL" displayName="Wiener polarity number" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M21.pEC50">
+        <MiningSchema>
+            <MiningField name="properties/M21.pEC50" usageType="predicted"/>
+            <MiningField name="descriptors/SwHBa" usageType="active"/>
+            <MiningField name="descriptors/MDEN-22" usageType="active"/>
+            <MiningField name="descriptors/WPOL" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="2.4268">
+            <NumericPredictor name="descriptors/SwHBa" coefficient="0.0689"/>
+            <NumericPredictor name="descriptors/MDEN-22" coefficient="0.4517"/>
+            <NumericPredictor name="descriptors/WPOL" coefficient="0.0424"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

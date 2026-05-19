@@ -1,0 +1,219 @@
+{
+  "n_selected_features": 8,
+  "selected_features": {
+    "Hierarchical_GA": [
+      "ABC",
+      "ATSC3s",
+      "BCUTs-1h",
+      "FilterItLogS",
+      "GATS1i",
+      "MATS1v",
+      "n6HRing",
+      "nG12FaRing"
+    ],
+    "Hierarchical_MC": [
+      "ABC",
+      "BCUTs-1h",
+      "C1SP2",
+      "ETA_shape_y",
+      "FilterItLogS",
+      "NdS",
+      "SlogP_VSA1",
+      "SlogP_VSA2"
+    ],
+    "KMeans_GA": [
+      "ATS0dv",
+      "ATS1Z",
+      "ATS5Z",
+      "ATSC0se",
+      "ATSC3s",
+      "ETA_shape_y",
+      "FilterItLogS",
+      "TopoPSA(NO)"
+    ],
+    "KMeans_MC": [
+      "AATS2i",
+      "ATS0dv",
+      "ATS6Z",
+      "FilterItLogS",
+      "IC2",
+      "NdO",
+      "RNCG",
+      "nG12FRing"
+    ],
+    "SOM_GA": [
+      "AATS0dv",
+      "ATSC4Z",
+      "ATSC8dv",
+      "BCUTs-1h",
+      "EState_VSA5",
+      "FilterItLogS",
+      "PEOE_VSA6",
+      "PEOE_VSA7"
+    ],
+    "SOM_MC": [
+      "ABC",
+      "ATSC2Z",
+      "ATSC3s",
+      "BCUTs-1h",
+      "EState_VSA5",
+      "FilterItLogS",
+      "GATS1i",
+      "VSA_EState1"
+    ]
+  },
+  "selection_sources": {
+    "Hierarchical_GA": {
+      "source_model_id": "Hierarchical_GA_PLS",
+      "source_regressor": "PLS",
+      "Q2_ext_F2": 0.8199609483950023
+    },
+    "Hierarchical_MC": {
+      "source_model_id": "Hierarchical_MC_PLS",
+      "source_regressor": "PLS",
+      "Q2_ext_F2": 0.8165167624849716
+    },
+    "KMeans_GA": {
+      "source_model_id": "KMeans_GA_MLR",
+      "source_regressor": "MLR",
+      "Q2_ext_F2": 0.8104464073441768
+    },
+    "KMeans_MC": {
+      "source_model_id": "KMeans_MC_MLR",
+      "source_regressor": "MLR",
+      "Q2_ext_F2": 0.8119396679124001
+    },
+    "SOM_GA": {
+      "source_model_id": "SOM_GA_PLS",
+      "source_regressor": "PLS",
+      "Q2_ext_F2": 0.7793695507268685
+    },
+    "SOM_MC": {
+      "source_model_id": "SOM_MC_PLS",
+      "source_regressor": "PLS",
+      "Q2_ext_F2": 0.8174706493861058
+    }
+  },
+  "all_model_selected_features": {
+    "Hierarchical_GA_MLR": [
+      "ABC",
+      "ATSC3s",
+      "BCUTs-1h",
+      "FilterItLogS",
+      "GATS1i",
+      "MATS1v",
+      "n6HRing",
+      "nG12FaRing"
+    ],
+    "Hierarchical_GA_PLS": [
+      "ABC",
+      "ATSC3s",
+      "BCUTs-1h",
+      "FilterItLogS",
+      "GATS1i",
+      "MATS1v",
+      "n6HRing",
+      "nG12FaRing"
+    ],
+    "Hierarchical_MC_MLR": [
+      "ABC",
+      "BCUTs-1h",
+      "C1SP2",
+      "ETA_shape_y",
+      "FilterItLogS",
+      "NdS",
+      "SlogP_VSA1",
+      "SlogP_VSA2"
+    ],
+    "Hierarchical_MC_PLS": [
+      "ABC",
+      "BCUTs-1h",
+      "C1SP2",
+      "ETA_shape_y",
+      "FilterItLogS",
+      "NdS",
+      "SlogP_VSA1",
+      "SlogP_VSA2"
+    ],
+    "KMeans_GA_MLR": [
+      "ATS0dv",
+      "ATS1Z",
+      "ATS5Z",
+      "ATSC0se",
+      "ATSC3s",
+      "ETA_shape_y",
+      "FilterItLogS",
+      "TopoPSA(NO)"
+    ],
+    "KMeans_GA_PLS": [
+      "ATS0dv",
+      "ATS1Z",
+      "ATS5Z",
+      "ATSC0se",
+      "ATSC3s",
+      "ETA_shape_y",
+      "FilterItLogS",
+      "TopoPSA(NO)"
+    ],
+    "KMeans_MC_MLR": [
+      "AATS2i",
+      "ATS0dv",
+      "ATS6Z",
+      "FilterItLogS",
+      "IC2",
+      "NdO",
+      "RNCG",
+      "nG12FRing"
+    ],
+    "KMeans_MC_PLS": [
+      "ATS1Z",
+      "ATS3Z",
+      "ATSC3Z",
+      "ETA_shape_y",
+      "FilterItLogS",
+      "MATS1c",
+      "NdO",
+      "nG12FRing"
+    ],
+    "SOM_GA_MLR": [
+      "AATS0dv",
+      "ATSC4Z",
+      "ATSC8dv",
+      "BCUTs-1h",
+      "EState_VSA5",
+      "FilterItLogS",
+      "PEOE_VSA6",
+      "PEOE_VSA7"
+    ],
+    "SOM_GA_PLS": [
+      "AATS0dv",
+      "ATSC4Z",
+      "ATSC8dv",
+      "BCUTs-1h",
+      "EState_VSA5",
+      "FilterItLogS",
+      "PEOE_VSA6",
+      "PEOE_VSA7"
+    ],
+    "SOM_MC_MLR": [
+      "ABC",
+      "ATSC3s",
+      "BCUTs-1h",
+      "EState_VSA5",
+      "EState_VSA7",
+      "FilterItLogS",
+      "GATS1i",
+      "PEOE_VSA6"
+    ],
+    "SOM_MC_PLS": [
+      "ABC",
+      "ATSC2Z",
+      "ATSC3s",
+      "BCUTs-1h",
+      "EState_VSA5",
+      "FilterItLogS",
+      "GATS1i",
+      "VSA_EState1"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+@article{2014JCC1036,
+  doi = {10.1002/jcc.23576},
+  year  = {2014},
+  month = {mar},
+  publisher = {Wiley-Blackwell},
+  volume = {35},
+  number = {13},
+  pages = {1036--1044},
+  author = {Gramatica, P. and Cassani, S. and Chirico, N.},
+  title = {{QSARINS}-chem: Insubria datasets and new {QSAR}/{QSPR} models for environmental pollutants in {QSARINS}},
+  journal = {Journal of Computational Chemistry}
+}
+
+@misc{QMRF_466,
+  author = {Gramatica, P.},
+  title = {QSARINS model for (benzo-)triazole toxicity in Pseudokirchneriella subcapitata},
+  url = {http://qsardb.jrc.it/qmrf/search_catalogs.jsp?id=466},
+  year = {2015}
+}

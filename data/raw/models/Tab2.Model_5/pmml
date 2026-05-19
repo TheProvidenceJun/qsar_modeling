@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M5.logHLn" displayName="Biotransformation half-lives in fish" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nHBAcc" displayName="Number of hydrogen bond acceptors (using CDK HBondAcceptorCountDescriptor algorithm)" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/VAdjMat" displayName="Vertex adjacency information (magnitude)" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/gmax" displayName="The maximum electrotopological state" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nX" displayName="The number of halogens" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/SaaaC" displayName="sum of atom-type E-State: ::C:" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/PubchemFP503" displayName="Pubchem fingerprint — simple smart pattern: Clsingle bondC:Csingle bond[#1] These bits test for the presence of simple SMARTS patterns, regardless of count, but where bond orders are specific and bond aromaticity matches both single and double bonds." optype="continuous" dataType="double"/>
+        <DataField name="descriptors/PubchemFP29" displayName="Pubchem fingerprint — count of individual chemical atoms ≥ 2Si" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/minHBd" displayName="The minimum E-State energy for hydrogen bond donors" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/ndsCH" displayName="Count of atom-type double bond; length as =CH-" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M5.logHLn">
+        <MiningSchema>
+            <MiningField name="properties/M5.logHLn" usageType="predicted"/>
+            <MiningField name="descriptors/nHBAcc" usageType="active"/>
+            <MiningField name="descriptors/VAdjMat" usageType="active"/>
+            <MiningField name="descriptors/gmax" usageType="active"/>
+            <MiningField name="descriptors/nX" usageType="active"/>
+            <MiningField name="descriptors/SaaaC" usageType="active"/>
+            <MiningField name="descriptors/PubchemFP503" usageType="active"/>
+            <MiningField name="descriptors/PubchemFP29" usageType="active"/>
+            <MiningField name="descriptors/minHBd" usageType="active"/>
+            <MiningField name="descriptors/ndsCH" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="-4.1059">
+            <NumericPredictor name="descriptors/nHBAcc" coefficient="-0.1785"/>
+            <NumericPredictor name="descriptors/VAdjMat" coefficient="1.096"/>
+            <NumericPredictor name="descriptors/gmax" coefficient="-0.1284"/>
+            <NumericPredictor name="descriptors/nX" coefficient="0.1116"/>
+            <NumericPredictor name="descriptors/SaaaC" coefficient="-0.118"/>
+            <NumericPredictor name="descriptors/PubchemFP503" coefficient="0.3938"/>
+            <NumericPredictor name="descriptors/PubchemFP29" coefficient="2.098"/>
+            <NumericPredictor name="descriptors/minHBd" coefficient="-0.6584"/>
+            <NumericPredictor name="descriptors/ndsCH" coefficient="0.1606"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

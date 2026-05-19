@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M8.logTA100" displayName="The mutagenicity potency in TA100 (without the S9 activation system) as log(TA100)" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/C3SP2" displayName="Doubly bound carbon bound to three other carbons" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/maxHaaCH" displayName="Maximum atom-type H E-State: :CH:" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M8.logTA100">
+        <MiningSchema>
+            <MiningField name="properties/M8.logTA100" usageType="predicted"/>
+            <MiningField name="descriptors/C3SP2" usageType="active"/>
+            <MiningField name="descriptors/maxHaaCH" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="-6.2315">
+            <NumericPredictor name="descriptors/C3SP2" coefficient="0.7981"/>
+            <NumericPredictor name="descriptors/maxHaaCH" coefficient="7.1685"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M9.logKoa" displayName="The octanol-air partition coefficient" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/VCH-7" displayName="Valence chain, order 7" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M9.logKoa">
+        <MiningSchema>
+            <MiningField name="properties/M9.logKoa" usageType="predicted"/>
+            <MiningField name="descriptors/VCH-7" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="5.3402">
+            <NumericPredictor name="descriptors/VCH-7" coefficient="24.869"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

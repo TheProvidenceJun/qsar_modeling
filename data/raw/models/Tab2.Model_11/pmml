@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M11.pPL" displayName="Vapour pressure" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/SsBr" displayName="Sum of atom-type E-State: -Br." optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M11.pPL">
+        <MiningSchema>
+            <MiningField name="properties/M11.pPL" usageType="predicted"/>
+            <MiningField name="descriptors/SsBr" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="0.5419">
+            <NumericPredictor name="descriptors/SsBr" coefficient="1.7451"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

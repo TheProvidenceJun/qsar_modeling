@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M23.pLC50" displayName="Acute toxicity to fish" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/VP-1" displayName="Valence path, order 1" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nHBAcc" displayName="Number of hydrogen bond acceptors (using CDK HBondAcceptorCountDescriptor algorithm)" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/minHBd" displayName="The minimum E-State energy for hydrogen bond donors" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M23.pLC50">
+        <MiningSchema>
+            <MiningField name="properties/M23.pLC50" usageType="predicted"/>
+            <MiningField name="descriptors/VP-1" usageType="active"/>
+            <MiningField name="descriptors/nHBAcc" usageType="active"/>
+            <MiningField name="descriptors/minHBd" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="3.6171">
+            <NumericPredictor name="descriptors/VP-1" coefficient="0.3008"/>
+            <NumericPredictor name="descriptors/nHBAcc" coefficient="-0.1695"/>
+            <NumericPredictor name="descriptors/minHBd" coefficient="-1.2047"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ModelRegistry xmlns="http://www.qsardb.org/QDB">
+    <Model>
+        <Id>Tab2.Model_1</Id>
+        <Name>P. promelas LC50</Name>
+        <Description>Global model</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M1.pLC50</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_2</Id>
+        <Name>logKoc</Name>
+        <Description>Global model</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M2.logKoc</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_3</Id>
+        <Name>Global half-life index</Name>
+        <Description>Global model</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M3.GHLI</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_4</Id>
+        <Name>EDC estrogen receptor binding</Name>
+        <Description>Global model</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M4.logRBA</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_5</Id>
+        <Name>Metab. biotransf. fish</Name>
+        <Description>Global model
+Model corresponds to QSARINS model Metabolic biotransformation fish M1</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M5.logHLn</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_6</Id>
+        <Name>Esters P. promelas LC50</Name>
+        <Description>Model for esters</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M6.pLC50</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_7</Id>
+        <Name>Esters D. magna EC50</Name>
+        <Description>Model for esters</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M7.pEC50</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_8</Id>
+        <Name>NitroPAH TA100 without S9</Name>
+        <Description>Model for nitrated polycyclic aromatic hydrocarbons</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M8.logTA100</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_9</Id>
+        <Name>BFR logKoa</Name>
+        <Description>Model for polybrominated diphenyl ethers</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M9.logKoa</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_10</Id>
+        <Name>BFR melting point</Name>
+        <Description>Model for polybrominated diphenyl ethers</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M10.MP</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_11</Id>
+        <Name>BFR vapor pressure</Name>
+        <Description>Model for polybrominated diphenyl ethers</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M11.pPL</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_12</Id>
+        <Name>PFC inal. mouse LC50</Name>
+        <Description>Model for polyfluorinated compounds</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M12.pLC50</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_13</Id>
+        <Name>PFC inal. rat LC50</Name>
+        <Description>Model for polyfluorinated compounds</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M13.pLC50</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_14</Id>
+        <Name>PFC oral rat LD50</Name>
+        <Description>Model for polyfluorinated compounds</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M14.pLD50</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_15</Id>
+        <Name>PFC solubility in water</Name>
+        <Description>Model for polyfluorinated compounds</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M15.logSw</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_16</Id>
+        <Name>PFC vapor pressure</Name>
+        <Description>Model for polyfluorinated compounds</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M16.logVP</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_17</Id>
+        <Name>(B)TAZ logKow</Name>
+        <Description>Model for (benzo-)triazoles</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M17.logKow</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_18</Id>
+        <Name>(B)TAZ melting point</Name>
+        <Description>Model for (benzo-)triazoles</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M18.MP</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_19</Id>
+        <Name>(B)TAZ solubility in water</Name>
+        <Description>Model for (benzo-)triazoles</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M19.logSw</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_20</Id>
+        <Name>(B)TAZ vapor pressure</Name>
+        <Description>Model for (benzo-)triazoles</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M20.logVP</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_21</Id>
+        <Name>(B)TAZ P. subcapitata EC50</Name>
+        <Description>Model for (benzo-)triazoles</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M21.pEC50</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_22</Id>
+        <Name>(B)TAZ D.magna EC50</Name>
+        <Description>Model for (benzo-)triazoles</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M22.pEC50</PropertyId>
+    </Model>
+    <Model>
+        <Id>Tab2.Model_23</Id>
+        <Name>(B)TAZ O. mykiss LC50</Name>
+        <Description>Model for (benzo-)triazoles</Description>
+        <Labels></Labels>
+        <Cargos>pmml bibtex</Cargos>
+        <PropertyId>M23.pLC50</PropertyId>
+    </Model>
+</ModelRegistry>

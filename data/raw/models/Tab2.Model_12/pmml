@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M12.pLC50" displayName="Acute lethal inhalation concentration 50 (LC50) in mice expressed as pLC50" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/VP-3" displayName="Valence path, order 3" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/XLogP" displayName="logP based on the atom-type method" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/TopoPSA" displayName="Topological polar surface area" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nsssCH" displayName="Count of atom-type E-State: &gt;CH-" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M12.pLC50">
+        <MiningSchema>
+            <MiningField name="properties/M12.pLC50" usageType="predicted"/>
+            <MiningField name="descriptors/VP-3" usageType="active"/>
+            <MiningField name="descriptors/XLogP" usageType="active"/>
+            <MiningField name="descriptors/TopoPSA" usageType="active"/>
+            <MiningField name="descriptors/nsssCH" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="2.9492">
+            <NumericPredictor name="descriptors/VP-3" coefficient="1.3553"/>
+            <NumericPredictor name="descriptors/XLogP" coefficient="-0.4156"/>
+            <NumericPredictor name="descriptors/TopoPSA" coefficient="0.0458"/>
+            <NumericPredictor name="descriptors/nsssCH" coefficient="-1.0346"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M16.logVP" displayName="Vapor pressure" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nH" displayName="Number of hydrogen atoms" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nHBint2" displayName="Count of E-State descriptors of strength for potential Hydrogen Bonds of path length 2" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nsF" displayName="Count of atom-type E-State: -F" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M16.logVP">
+        <MiningSchema>
+            <MiningField name="properties/M16.logVP" usageType="predicted"/>
+            <MiningField name="descriptors/nH" usageType="active"/>
+            <MiningField name="descriptors/nHBint2" usageType="active"/>
+            <MiningField name="descriptors/nsF" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="4.4717">
+            <NumericPredictor name="descriptors/nH" coefficient="-0.4558"/>
+            <NumericPredictor name="descriptors/nHBint2" coefficient="-2.4058"/>
+            <NumericPredictor name="descriptors/nsF" coefficient="-0.2042"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

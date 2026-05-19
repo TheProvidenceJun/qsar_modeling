@@ -1,0 +1,55 @@
+@article{Tittlemier_2002,
+	title = {Vapor pressures, aqueous solubilities, and Henry’s law constants of some brominated flame retardants},
+	volume = {21},
+	ISSN = {1552-8618},
+	DOI = {10.1002/etc.5620210907},
+	number = {9},
+	journal = {Environmental Toxicology and Chemistry},
+	publisher = {Wiley-Blackwell},
+	author = {Tittlemier, S. A. and Halldorson, T. and Stern, G. A. and Tomy, G. T.},
+	year = {2002},
+	month = {Sep},
+	pages = {1804–1810}
+}
+
+@article{Marsh_1999,
+	title = {Synthesis and Characterization of 32 Polybrominated Diphenyl Ethers},
+	volume = {33},
+	ISSN = {1520-5851},
+	DOI = {10.1021/es9902266},
+	number = {17},
+	journal = {Environ. Sci. Technol.},
+	publisher = {American Chemical Society (ACS)},
+	author = {Marsh, G. and Hu, J. and Jakobsson, E. and Rahm, S. and Bergman, Ȧ.},
+	year = {1999},
+	month = {Sep},
+	pages = {3033–3037}
+}
+
+@article{Palm_2002,
+	title = {Assessing the environmental fate of chemicals of emerging concern: a case study of the polybrominated diphenyl ethers},
+	volume = {117},
+	ISSN = {0269-7491},
+	DOI = {10.1016/s0269-7491(01)00276-7},
+	number = {2},
+	journal = {Environmental Pollution},
+	publisher = {Elsevier BV},
+	author = {Palm, A. and Cousins, I. T. and Mackay, D. and Tysklinnd, M. and Alaee, M.},
+	year = {2002},
+	month = {Apr},
+	pages = {195–213}
+}
+
+@article{Kuramochi_2007,
+	title = {Physicochemical properties of selected polybrominated diphenyl ethers and extension of the UNIFAC model to brominated aromatic compounds},
+	volume = {67},
+	ISSN = {0045-6535},
+	DOI = {10.1016/j.chemosphere.2006.05.076},
+	number = {9},
+	journal = {Chemosphere},
+	publisher = {Elsevier BV},
+	author = {Kuramochi, H. and Maeda, K. and Kawamoto, K.},
+	year = {2007},
+	month = {Apr},
+	pages = {1858–1865}
+}

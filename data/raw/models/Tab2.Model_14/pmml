@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M14.pLD50" displayName="Acute oral toxicity in rat as log(1/LD50)" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/SCH-5" displayName="Simple chain, order 5" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/SHBint3" displayName="Sum of E-State descriptors of strength for potential Hydrogen Bonds of path length 3" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/maxdO" displayName="Maximum atom-type E-State: =O" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/SHCsats" displayName="Sum of atom-type H E-State: H on C sp3 bonded to saturated C" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M14.pLD50">
+        <MiningSchema>
+            <MiningField name="properties/M14.pLD50" usageType="predicted"/>
+            <MiningField name="descriptors/SCH-5" usageType="active"/>
+            <MiningField name="descriptors/SHBint3" usageType="active"/>
+            <MiningField name="descriptors/maxdO" usageType="active"/>
+            <MiningField name="descriptors/SHCsats" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="1.9342">
+            <NumericPredictor name="descriptors/SCH-5" coefficient="22.7097"/>
+            <NumericPredictor name="descriptors/SHBint3" coefficient="0.0251"/>
+            <NumericPredictor name="descriptors/maxdO" coefficient="0.0677"/>
+            <NumericPredictor name="descriptors/SHCsats" coefficient="-0.2478"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

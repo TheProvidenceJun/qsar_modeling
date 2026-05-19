@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M6.pLC50" displayName="Acute toxicity to fish (lethality) as ..." optype="continuous" dataType="double"/>
+        <DataField name="descriptors/VP-2" displayName="Valence path, order 2" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/maxHdsCH" displayName="Maximum atom-type H E-State: =CH-" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M6.pLC50">
+        <MiningSchema>
+            <MiningField name="properties/M6.pLC50" usageType="predicted"/>
+            <MiningField name="descriptors/VP-2" usageType="active"/>
+            <MiningField name="descriptors/maxHdsCH" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="-0.5523">
+            <NumericPredictor name="descriptors/VP-2" coefficient="0.6229"/>
+            <NumericPredictor name="descriptors/maxHdsCH" coefficient="1.7117"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

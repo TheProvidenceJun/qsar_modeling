@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M7.pEC50" displayName="Short-term toxicity to Daphnia" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/VP-2" displayName="Valence path, order 2" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nsCH3" displayName="Count of atom-type E-State: -CH3" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/minHdCH2" displayName="Minimum atom-type H E-State: =CH2" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M7.pEC50">
+        <MiningSchema>
+            <MiningField name="properties/M7.pEC50" usageType="predicted"/>
+            <MiningField name="descriptors/VP-2" usageType="active"/>
+            <MiningField name="descriptors/nsCH3" usageType="active"/>
+            <MiningField name="descriptors/minHdCH2" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="0.3656">
+            <NumericPredictor name="descriptors/VP-2" coefficient="0.5266"/>
+            <NumericPredictor name="descriptors/nsCH3" coefficient="-0.7755"/>
+            <NumericPredictor name="descriptors/minHdCH2" coefficient="1.6963"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

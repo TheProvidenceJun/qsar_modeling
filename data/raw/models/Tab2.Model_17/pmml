@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M17.logKow" displayName="The octanol-water partition coefficient" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nN" displayName="The number of nitrogens" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nHBAcc" displayName="Number of hydrogen bond acceptors (using CDK HBondAcceptorCountDescriptor algorithm)" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/MW" displayName="Molecular weight" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/MDEC-12" displayName="Molecular distance edge between all primary and secondary carbons" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M17.logKow">
+        <MiningSchema>
+            <MiningField name="properties/M17.logKow" usageType="predicted"/>
+            <MiningField name="descriptors/nN" usageType="active"/>
+            <MiningField name="descriptors/nHBAcc" usageType="active"/>
+            <MiningField name="descriptors/MW" usageType="active"/>
+            <MiningField name="descriptors/MDEC-12" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="1.4507">
+            <NumericPredictor name="descriptors/nN" coefficient="-0.2601"/>
+            <NumericPredictor name="descriptors/nHBAcc" coefficient="-0.5357"/>
+            <NumericPredictor name="descriptors/MW" coefficient="0.014"/>
+            <NumericPredictor name="descriptors/MDEC-12" coefficient="0.2355"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

@@ -1,0 +1,23 @@
+@article{doi:10.1080/10629369608031711,
+author = { Cash, G. G.  and  Clements, R. G. },
+title = {Comparison of Structure-Activity Relationships Derived from Two Methods for Estimating Octanol-Water Partition Coefficients},
+journal = {SAR QSAR Environ. Res.},
+volume = {5},
+number = {2},
+pages = {113-124},
+year = {1996},
+doi = {10.1080/10629369608031711},
+}
+
+@article {ETC:ETC5620160507,
+author = {Staples, C. A. and Adams, W. J. and Parkerton, T. F. and Gorsuch, J. W. and Biddinger, G. R. and Reinert, K. H.},
+title = {Aquatic toxicity of eighteen phthalate esters},
+journal = {Environ. Toxicol. Chem.},
+volume = {16},
+number = {5},
+publisher = {Wiley Periodicals, Inc.},
+issn = {1552-8618},
+doi = {10.1002/etc.5620160507},
+pages = {875--891},
+year = {1997},
+}

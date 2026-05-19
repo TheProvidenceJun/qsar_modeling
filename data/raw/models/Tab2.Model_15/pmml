@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M15.logSw" displayName="Water solubility" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/XLogP" displayName="logP based on the atom-type method" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/PubchemFP344" displayName="C(~C)(~H). Simple atom nearest neighbors - These bits test for the  presence of atom nearest neighbor patterns, regardless of  bond order (denoted by &quot;~&quot;) or count, but where bond aromaticity (denoted by &quot;:&quot;) is significant." optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M15.logSw">
+        <MiningSchema>
+            <MiningField name="properties/M15.logSw" usageType="predicted"/>
+            <MiningField name="descriptors/XLogP" usageType="active"/>
+            <MiningField name="descriptors/PubchemFP344" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="4.0231">
+            <NumericPredictor name="descriptors/XLogP" coefficient="-0.8612"/>
+            <NumericPredictor name="descriptors/PubchemFP344" coefficient="1.8867"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

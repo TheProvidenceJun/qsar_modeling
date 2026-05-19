@@ -1,0 +1,41 @@
+@article{Gouin_2003,
+	title = {Modelling the environmental fate of the polybrominated diphenyl ethers},
+	volume = {29},
+	ISSN = {0160-4120},
+	DOI = {10.1016/s0160-4120(03)00116-8},
+	number = {6},
+	journal = {Environment International},
+	publisher = {Elsevier BV},
+	author = {Gouin, T. and Harner, T.},
+	year = {2003},
+	month = {Sep},
+	pages = {717–724}
+}
+
+@article{Harner_2002,
+	title = { Measurements of Octanol−Air Partition Coefficients ( K OA ) for Polybrominated Diphenyl Ethers (PBDEs): Predicting Partitioning in the Environment },
+	volume = {47},
+	ISSN = {1520-5134},
+	DOI = {10.1021/je010192t},
+	number = {2},
+	journal = {Journal of Chemical & Engineering Data},
+	publisher = {American Chemical Society (ACS)},
+	author = {Harner, T. and Shoeib, M.},
+	year = {2002},
+	month = {Mar},
+	pages = {228–232}
+}
+
+@article{Wania_2002,
+	title = {Estimating Octanol−Air Partition Coefficients of Nonpolar Semivolatile Organic Compounds from Gas Chromatographic Retention Times},
+	volume = {74},
+	ISSN = {1520-6882},
+	DOI = {10.1021/ac0256033},
+	number = {14},
+	journal = {Analytical Chemistry},
+	publisher = {American Chemical Society (ACS)},
+	author = {Wania, F. and Lei, Y. D. and Harner, T.},
+	year = {2002},
+	month = {Jul},
+	pages = {3476–3483}
+}

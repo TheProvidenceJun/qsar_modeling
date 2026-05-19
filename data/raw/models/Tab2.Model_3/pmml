@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M3.GHLI" displayName="Global half-life index" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/MW" displayName="Molecular weight" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/maxHBa" displayName="Maximum E-States for (strong) Hydrogen Bond acceptors" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/MinsCl" displayName="Minimum atom-type E-State: -Cl" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nBondsS2" displayName="Total number of single bonds (including bonds to hydrogens, excluding aromatic bonds)" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nHBDon_Lipinski" displayName="Number of hydrogen bond donors (using Lipinski's definition: Any OH or NH. Each available hydrogen atom is counted as one hydrogen bond donor)" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M3.GHLI">
+        <MiningSchema>
+            <MiningField name="properties/M3.GHLI" usageType="predicted"/>
+            <MiningField name="descriptors/MW" usageType="active"/>
+            <MiningField name="descriptors/maxHBa" usageType="active"/>
+            <MiningField name="descriptors/MinsCl" usageType="active"/>
+            <MiningField name="descriptors/nBondsS2" usageType="active"/>
+            <MiningField name="descriptors/nHBDon_Lipinski" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="-0.566">
+            <NumericPredictor name="descriptors/MW" coefficient="0.0117"/>
+            <NumericPredictor name="descriptors/maxHBa" coefficient="-0.1506"/>
+            <NumericPredictor name="descriptors/MinsCl" coefficient="0.7472"/>
+            <NumericPredictor name="descriptors/nBondsS2" coefficient="-0.0475"/>
+            <NumericPredictor name="descriptors/nHBDon_Lipinski" coefficient="-0.4297"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

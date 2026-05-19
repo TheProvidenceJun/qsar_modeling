@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M1.pLC50" displayName="Acute toxicity to fish (lethality) as ...." optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nN" displayName="number of nitrogens" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/VP-1" displayName="Valence path, order 1" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/NaasC" displayName="Count of atom-type E-State: :C:-" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/HybRatio" displayName="Fraction of sp3 carbons to sp2 carbons" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nAtomLAC" displayName="Number of atoms in the longest aliphatic chain" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/MLFER_BH" displayName="Overall or summation solute hydrogen bond basicity" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M1.pLC50">
+        <MiningSchema>
+            <MiningField name="properties/M1.pLC50" usageType="predicted"/>
+            <MiningField name="descriptors/nN" usageType="active"/>
+            <MiningField name="descriptors/VP-1" usageType="active"/>
+            <MiningField name="descriptors/NaasC" usageType="active"/>
+            <MiningField name="descriptors/HybRatio" usageType="active"/>
+            <MiningField name="descriptors/nAtomLAC" usageType="active"/>
+            <MiningField name="descriptors/MLFER_BH" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="2.308">
+            <NumericPredictor name="descriptors/nN" coefficient="-0.23"/>
+            <NumericPredictor name="descriptors/VP-1" coefficient="0.5585"/>
+            <NumericPredictor name="descriptors/NaasC" coefficient="0.1747"/>
+            <NumericPredictor name="descriptors/HybRatio" coefficient="-0.8571"/>
+            <NumericPredictor name="descriptors/nAtomLAC" coefficient="0.1222"/>
+            <NumericPredictor name="descriptors/MLFER_BH" coefficient="-1.0948"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

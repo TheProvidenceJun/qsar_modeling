@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M13.pLC50" displayName="Acute inhalation toxicity" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nAtomLAC" displayName="Number of atoms in the longest aliphatic chain" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/TopoPSA" displayName="Topological polar surface area" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/C2SP2" displayName="Doubly bound carbon bound to two other carbons" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/minHCsats" displayName="Minimum atom-type H E-State: H bonded to B, Si, P, Ge, As, Se, Sn or Pb" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M13.pLC50">
+        <MiningSchema>
+            <MiningField name="properties/M13.pLC50" usageType="predicted"/>
+            <MiningField name="descriptors/nAtomLAC" usageType="active"/>
+            <MiningField name="descriptors/TopoPSA" usageType="active"/>
+            <MiningField name="descriptors/C2SP2" usageType="active"/>
+            <MiningField name="descriptors/minHCsats" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="0.7248">
+            <NumericPredictor name="descriptors/nAtomLAC" coefficient="0.5217"/>
+            <NumericPredictor name="descriptors/TopoPSA" coefficient="0.0543"/>
+            <NumericPredictor name="descriptors/C2SP2" coefficient="0.5209"/>
+            <NumericPredictor name="descriptors/minHCsats" coefficient="-0.9206"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M4.logRBA" displayName="EDC estrogen receptor binding" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nHBAcc" displayName="Number of hydrogen bond acceptors (using CDK HBondAcceptorCountDescriptor algorithm)" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/maxHsOH" displayName="Maximum atom-type H E-State: -OH" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/hmax" displayName="Maximum H E-State" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/MDEC-13" displayName="Molecular distance edge between all primary and tertiary carbons" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/MDEC-23" displayName="Molecular distance edge between all secondary and tertiary carbons" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/n6Ring" displayName="Number of 6-membered rings" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nFG12Ring" displayName="Number of &gt;12-membered fused rings" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/VAdjMat" displayName="Vertex adjacency information (magnitude)" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M4.logRBA">
+        <MiningSchema>
+            <MiningField name="properties/M4.logRBA" usageType="predicted"/>
+            <MiningField name="descriptors/nHBAcc" usageType="active"/>
+            <MiningField name="descriptors/maxHsOH" usageType="active"/>
+            <MiningField name="descriptors/hmax" usageType="active"/>
+            <MiningField name="descriptors/MDEC-13" usageType="active"/>
+            <MiningField name="descriptors/MDEC-23" usageType="active"/>
+            <MiningField name="descriptors/n6Ring" usageType="active"/>
+            <MiningField name="descriptors/nFG12Ring" usageType="active"/>
+            <MiningField name="descriptors/VAdjMat" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="-17.1591">
+            <NumericPredictor name="descriptors/nHBAcc" coefficient="-0.6499"/>
+            <NumericPredictor name="descriptors/maxHsOH" coefficient="2.9845"/>
+            <NumericPredictor name="descriptors/hmax" coefficient="-1.2107"/>
+            <NumericPredictor name="descriptors/MDEC-13" coefficient="0.1522"/>
+            <NumericPredictor name="descriptors/MDEC-23" coefficient="0.1484"/>
+            <NumericPredictor name="descriptors/n6Ring" coefficient="-1.1939"/>
+            <NumericPredictor name="descriptors/nFG12Ring" coefficient="0.5483"/>
+            <NumericPredictor name="descriptors/VAdjMat" coefficient="2.9337"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

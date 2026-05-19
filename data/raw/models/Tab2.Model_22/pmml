@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M22.pEC50" displayName="Short-term toxicity to Daphnia" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/maxHaaCH" displayName="Maximum atom-type H E-State: :CH:" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/TopoPSA" displayName="Topological polar surface area" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/C2SP2" displayName="Doubly bound carbon bound to two other carbons" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/WPATH" displayName="Wiener path number" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nT9Ring" displayName="Number of 9-membered rings (includes counts from fused rings)" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M22.pEC50">
+        <MiningSchema>
+            <MiningField name="properties/M22.pEC50" usageType="predicted"/>
+            <MiningField name="descriptors/maxHaaCH" usageType="active"/>
+            <MiningField name="descriptors/TopoPSA" usageType="active"/>
+            <MiningField name="descriptors/C2SP2" usageType="active"/>
+            <MiningField name="descriptors/WPATH" usageType="active"/>
+            <MiningField name="descriptors/nT9Ring" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="4.5782">
+            <NumericPredictor name="descriptors/maxHaaCH" coefficient="-0.6011"/>
+            <NumericPredictor name="descriptors/TopoPSA" coefficient="-0.0154"/>
+            <NumericPredictor name="descriptors/C2SP2" coefficient="0.0665"/>
+            <NumericPredictor name="descriptors/WPATH" coefficient="8.0E-4"/>
+            <NumericPredictor name="descriptors/nT9Ring" coefficient="-0.4657"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

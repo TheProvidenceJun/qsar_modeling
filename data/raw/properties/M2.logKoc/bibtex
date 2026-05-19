@@ -1,0 +1,44 @@
+@article{Sablji__1995,
+	title = {QSAR modelling of soil sorption. Improvements and systematics of log KOC vs. log KOW correlations},
+	volume = {31},
+	ISSN = {0045-6535},
+	url = {http://dx.doi.org/10.1016/0045-6535(95)00327-5},
+	DOI = {10.1016/0045-6535(95)00327-5},
+	number = {11-12},
+	journal = {Chemosphere},
+	publisher = {Elsevier BV},
+	author = {Sabljić, A. and Güsten, H. and Verhaar, H. and Hermens, J.},
+	year = {1995},
+	month = {Dec},
+	pages = {4489–4514}
+}
+
+@article{Tao_1999,
+	title = { Estimation of Organic Carbon Normalized Sorption Coefficient (Koc) for Soils Using the Fragment Constant Method },
+	volume = {33},
+	ISSN = {1520-5851},
+	url = {http://dx.doi.org/10.1021/es980833d},
+	DOI = {10.1021/es980833d},
+	number = {16},
+	journal = {Environ. Sci. Technol.},
+	publisher = {American Chemical Society (ACS)},
+	author = {Tao, S. and Piao, H. and Dawson, R. and Lu, X. and Hu, H.},
+	year = {1999},
+	month = {Aug},
+	pages = {2719–2725}
+}
+
+@article{Huuskonen_2003,
+	title = {Prediction of Soil Sorption Coefficient of a Diverse Set of Organic Chemicals From Molecular Structure},
+	volume = {43},
+	ISSN = {1549-9596},
+	url = {http://dx.doi.org/10.1021/ci020342j},
+	DOI = {10.1021/ci020342j},
+	number = {5},
+	journal = {J. Chem. Inf. Model.},
+	publisher = {American Chemical Society (ACS)},
+	author = {Huuskonen, J.},
+	year = {2003},
+	month = {Sep},
+	pages = {1457–1462}
+}

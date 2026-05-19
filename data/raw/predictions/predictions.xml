@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PredictionRegistry xmlns="http://www.qsardb.org/QDB">
+    <Prediction>
+        <Id>M1.Calc.pLC50</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_1</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M2.Calc.logKoc</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_2</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M3.Calc.GHLI</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_3</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M4.Calc.logRBA</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_4</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M5.Calc.logHLn</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_5</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M6.Calc.pLC50</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_6</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M7.Calc.pEC50</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_7</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M8.Calc.LogTA100</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_8</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M9.Calc.logKoa</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_9</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M10.Calc.MP</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_10</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M11.Calc.pPL</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_11</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M12.Calc.pLC50</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_12</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M13.Calc.pLC50</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_13</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M14.Calc.pLD50</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_14</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M15.Calc.logSw</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_15</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M16.Calc.logVP</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_16</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M17.Calc.logKow</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_17</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M18.Calc.MP</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_18</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M19.Calc.logSw</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_19</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M20.Calc.logVP</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_20</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M21.Calc.pEC50</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_21</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M22.Calc.pEC50</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_22</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+    <Prediction>
+        <Id>M23.Calc.pLC50</Id>
+        <Name>Training set</Name>
+        <Labels></Labels>
+        <Cargos>values</Cargos>
+        <ModelId>Tab2.Model_23</ModelId>
+        <Type>training</Type>
+        <Application>QSARINS 1.2</Application>
+    </Prediction>
+</PredictionRegistry>

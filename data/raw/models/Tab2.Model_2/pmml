@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M2.logKoc" displayName="The soil sorption partition coefficient" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/VP-0" displayName="Valence path, order 0" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nAromBond" displayName="number of aromatic bonds" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/MAXDP" displayName="Maximum positive intrinsic state difference in the molecule (related to the electrophilicity of the molecule).  Using deltaV = (Zv-maxBondedHydrogens) /(atomicNumber-Zv-1)" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/nHBAcc" displayName="Number of hydrogen bond acceptors (using CDK HBondAcceptorCountDescriptor algorithm)" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M2.logKoc">
+        <MiningSchema>
+            <MiningField name="properties/M2.logKoc" usageType="predicted"/>
+            <MiningField name="descriptors/VP-0" usageType="active"/>
+            <MiningField name="descriptors/nAromBond" usageType="active"/>
+            <MiningField name="descriptors/MAXDP" usageType="active"/>
+            <MiningField name="descriptors/nHBAcc" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="0.8728">
+            <NumericPredictor name="descriptors/VP-0" coefficient="0.2596"/>
+            <NumericPredictor name="descriptors/nAromBond" coefficient="0.0755"/>
+            <NumericPredictor name="descriptors/MAXDP" coefficient="-0.1854"/>
+            <NumericPredictor name="descriptors/nHBAcc" coefficient="-0.2333"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

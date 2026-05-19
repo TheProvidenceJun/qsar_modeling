@@ -1,33 +1,14 @@
-# Local data and generated features
-data/
 
-# Python
+# 2. 파이썬 컴파일 및 캐시 파일 (협업 필수)
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-.Python
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
 
-# Jupyter
-.ipynb_checkpoints/
-
-# Conda / virtual environments
+# 3. 가상환경 디렉토리 (용량 필수)
 .conda/
 .venv/
 venv/
-env/
 
-# OS / editor
-.DS_Store
-Thumbs.db
+# 4. 개발 툴 설정 (개인 설정 공유 방지)
 .vscode/
 .idea/
-
-# Logs and temporary outputs
-*.log
-tmp/
-temp/
-
+.ipynb_checkpoints/

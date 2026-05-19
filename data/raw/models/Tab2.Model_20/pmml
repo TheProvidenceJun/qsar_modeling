@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_1" version="4.1">
+    <DataDictionary>
+        <DataField name="properties/M20.logVP" displayName="Vapor pressure" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/n6Ring" displayName="Number of 6-membered rings" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/ATSc5" displayName="ATS autocorrelation descriptor, weighted by charges" optype="continuous" dataType="double"/>
+        <DataField name="descriptors/minwHBa" displayName="Minimum E-States for weak Hydrogen Bond acceptors" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" targetFieldName="properties/M20.logVP">
+        <MiningSchema>
+            <MiningField name="properties/M20.logVP" usageType="predicted"/>
+            <MiningField name="descriptors/n6Ring" usageType="active"/>
+            <MiningField name="descriptors/ATSc5" usageType="active"/>
+            <MiningField name="descriptors/minwHBa" usageType="active"/>
+        </MiningSchema>
+        <RegressionTable intercept="-6.7759">
+            <NumericPredictor name="descriptors/n6Ring" coefficient="-1.2355"/>
+            <NumericPredictor name="descriptors/ATSc5" coefficient="12.0054"/>
+            <NumericPredictor name="descriptors/minwHBa" coefficient="0.888"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>
