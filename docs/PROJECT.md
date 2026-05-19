@@ -138,11 +138,60 @@ Synthesize and align all multi-track validation statistics into a unified, publi
      - **Validation/Predictivity:** $Q^2_{ext\ F1}$, $Q^2_{ext\ F2}$, $Q^2_{ext\ F3}$, $RMSE_{ext}$, $MAE_{ext}$, $CCC_{ext}$
      - **Reliability Safeguards:** $R^2_{y-sc}$ (Champion exclusive), MCCV Stability ($R^2_{ext} \pm SD$)
 
-### Phase 5: Paper Draft & Repository Documentation
-Prepare formal documentation and manuscript-style outputs.
-- Draft `docs/Paper_Draft.md` (Intro to Supp Info).
-- Compare final model performance against the original paper.
-- Document the workflow in `README.md`.
+### Phase 5: Final Manuscript Compilation & Review-Paper Writing
+Complete the final quantitative benchmark, manuscript narrative, repository documentation, and appendix integration.
+
+#### Strict Academic Manuscript Formatting Guidelines
+All Phase 5 manuscript drafting and revision work must comply with the following rules.
+- **Formal tone only:** Manuscript text must not contain colloquialisms, informal phrasing, or contractions. Use formal constructions such as "did not" rather than "didn't" and "is not" rather than "isn't".
+- **No numbers at sentence starts:** A sentence must not begin with a raw numeral. Spell out the number or restructure the sentence, for example "Eight descriptors were selected..." rather than "8 descriptors were selected...".
+- **Strict tense consistency:** Use past tense for completed experimental actions and reported results, and use present tense for established facts, general principles, figure/table descriptions, and interpretive statements that remain valid.
+- **Explicit pronouns:** Avoid ambiguous demonstrative pronouns. Do not write vague constructions such as "This shows that..." or "It demonstrates...". Supply the specific noun, for example "This performance gap indicates that..." or "The high cross-validation score demonstrates that...".
+- **Logical transitions:** Do not overuse causal conjunctions such as "therefore", "thus", "hence", and "consequently". Sentence flow must be supported by clear technical logic rather than forced transitional phrasing.
+
+**Context preservation protocol:** Every Phase 5 text expansion must overwrite `docs/Paper_Draft.md` by building cleanly upon the previously established Phase 1-4 manuscript baseline. The writer must read the current full paper draft before editing, preserve validated scientific claims, and avoid replacing established sections with disconnected prose.
+
+#### Step 5.1: Quantitative Benchmark & OECD Validation Coding
+Append a final verification cell to `notebooks/04_result_metrics.ipynb` to construct a comparative benchmark and OECD validation table.
+- **Target output:** `data/features/benchmark_oecd_comparison.csv`
+- **Purpose:** Map the performance of the Champion Model (`Hierarchical_MC_MLR`) directly against the Gramatica et al. 2014 Model 4 paper metrics and OECD validation criteria thresholds.
+- **Required comparison focus:**
+  - Champion model validation metrics from `data/features/final_comprehensive_metrics.csv`
+  - Historical Gramatica 2014 benchmark metrics, including external `R²_ext = 0.794`
+  - OECD/QMRF validation criteria, including internal robustness, external predictivity, applicability domain, and chance-correlation safeguards
+
+#### Step 5.2: Introduction and Materials & Methods Drafting
+Author Sections 1 and 2 in `docs/Paper_Draft.md`.
+- Establish the environmental and regulatory significance of soil sorption coefficient (`logKoc`) prediction.
+- Describe the QDB.177 source dataset, the `M2.logKoc` endpoint, and the Gramatica et al. 2014 benchmark context.
+- Document the Y-ranking 80/20 train/test split and zero-overlap validation.
+- Explain the curse of dimensionality introduced by the 1,613 raw Mordred descriptors.
+- Describe the strict train-set-only preprocessing pipeline and the reduction to 377 robust descriptors.
+- Describe the three feature-clustering strategies: Hierarchical, K-Means, and SOM.
+- State the strict 8-descriptor constraint used to align with the Gramatica 2014 benchmark model.
+
+#### Step 5.3: Results and Discussion Compiling
+Author Section 3 in `docs/Paper_Draft.md`.
+- Discuss feature-space partitioning and clustering behavior, including Silhouette-score ranking where available.
+- Discuss the 16-model screening matrix sorted strictly by `Q²_cv`.
+- Explain why the linear `Hierarchical_MC_MLR` model outperformed or matched higher-capacity RF/SVR pathways under the primary robustness criterion, emphasizing the apparent linearity of the dominant chemical causality captured by the selected descriptors.
+- Discuss statistical robustness from the 100-iteration MCCV stability distribution.
+- Discuss chance-correlation rejection, including Y-scrambling collapse to average `R²_y-sc = 0.016`.
+- Discuss applicability-domain verification from the Williams Plot under OECD Principle 3.
+- Provide the core comparative discussion proving that the 8-descriptor pipeline exceeded the original Gramatica 2014 historical external benchmark (`R²_ext = 0.794`).
+
+#### Step 5.4: Conclusion and High-Impact References Formatting
+Author Sections 4 and 5 in `docs/Paper_Draft.md`.
+- Summarize the final Champion Model and its OECD/QMRF validation compliance.
+- State the practical implication of the validated 8-descriptor MLR model for logKoc prediction.
+- Format and refine a focused high-impact reference list.
+- Include the core Gramatica 2014 Journal of Computational Chemistry citation and QDB.177 archive information.
+
+#### Step 5.5: Appendix - Core Source Code Integration
+Merge verified Phase 4 and Phase 5 verification and diagnostic source code into Section 6 of `docs/Paper_Draft.md`.
+- Include only essential, reproducible code blocks within the strict 10-page manuscript constraint.
+- Prioritize code supporting benchmark table construction, final metrics integration, predicted-versus-experimental visualization, and Williams Plot generation.
+- Avoid duplicating large intermediate notebook logic unless it is required for reproducibility or auditability.
 
 ## 📂 Directory Architecture
 ```text

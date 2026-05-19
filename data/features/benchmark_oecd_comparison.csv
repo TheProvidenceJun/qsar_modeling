@@ -1,0 +1,3 @@
+Model,Model_Source,Algorithm,N_Descriptors,R2_train,Q2_cv,Q2_ext_F2,MCCV_R2_Mean,Y_Scramble_R2_Mean,Benchmark_Role,Delta_vs_Gramatica_Q2_ext_F2,Meets_8_Descriptor_Constraint,External_Benchmark_Exceeded
+Gramatica 2014 Model 4,Historical literature baseline,MLR,8,0.79,0.78,0.794,,,Reference benchmark,0.0,True,False
+Hierarchical_MC_MLR,Current QSAR workflow champion,MLR,8,0.820182,0.811974,0.814252,0.806404,0.016196,Validated champion model,0.020251999999999937,True,True

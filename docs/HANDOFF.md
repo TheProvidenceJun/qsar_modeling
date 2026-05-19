@@ -1,7 +1,7 @@
 # Project Handoff
 
 ## Current Status
-Phase 3 is officially complete. The Champion Model has survived external validation, 100-iteration MCCV, and 100-iteration Y-scrambling.
+Phase 5 - Step 5.2 is complete, and the project is now in Phase 5 - Step 5.3 for Results and Discussion compilation.
 - The QDB.177 `M2.logKoc` endpoint was parsed from `data/raw/properties/M2.logKoc/values`.
 - Raw compound identifiers were mapped to SMILES files under `data/raw/compounds/<Compound Id>/daylight-smiles`.
 - RDKit validation and canonicalization secured 642 unique valid compounds from 643 raw entries.
@@ -17,6 +17,14 @@ Phase 3 is officially complete. The Champion Model has survived external validat
 - The rigorous `Q²_cv` comparison selected `Hierarchical_MC_MLR` as the Champion Model.
 - The 100-iteration MCCV robustness test on the locked `Hierarchical_MC_MLR` Champion Model yielded an average `R²_ext` of 0.806.
 - The 100-iteration Y-scrambling test yielded an average scrambled `R²_y-sc` of 0.016, confirming that the Champion Model is not based on chance correlation.
+- Phase 4 generated high-resolution diagnostic plots for the Champion Model:
+  - `data/features/figure_predicted_vs_experimental.png`
+  - `data/features/figure_williams_plot.png`
+- The Williams Plot established the warning leverage threshold at `h* = 0.0525` and confirmed broad applicability-domain compliance under OECD Principle 3.
+- All 16 evaluated model records were integrated with MCCV and Y-scrambling summaries in `data/features/final_comprehensive_metrics.csv` with shape `(16, 33)`.
+- Phase 5 manuscript rules have been sealed in `docs/PROJECT.md`, including formal academic tone, no raw numerals at sentence starts, tense consistency, explicit pronouns, disciplined logical transitions, and the requirement to build every paper expansion from the current Phase 1-4 baseline.
+- Phase 5 - Step 5.1 generated `data/features/benchmark_oecd_comparison.csv`, confirming direct comparison against Gramatica 2014 Model 4.
+- Phase 5 - Step 5.2 completed the manuscript Introduction and Materials and Methods sections in `docs/Paper_Draft.md`.
 
 ## Active Project
 - **Project:** QSAR logKoc Modeling Project
@@ -27,23 +35,25 @@ Phase 3 is officially complete. The Champion Model has survived external validat
 - **Benchmark descriptor count:** 8 descriptors
 
 ## Current Phase
-**Phase 4: Applicability Domain & Visualization**
+**Phase 5 - Step 5.3: Results and Discussion Compiling**
 This is the next action.
 
 ## Next Action
-Generate the Python visualization and applicability-domain script for Phase 4.
+Proceed to **Phase 5 - Step 5.3: Results and Discussion Compiling**.
 
-Required Phase 4 tasks:
-- **Step 4.1: Predicted vs. Experimental Scatter Plot**
-  - Generate publication-quality scatter plots for the final Champion Model.
-  - Plot experimental versus predicted `logKoc` for Training and Test sets.
-  - Include the identity line and relevant validation metrics.
-- **Step 4.2: Williams Plot (Applicability Domain)**
-  - Calculate standardized residuals for the Champion Model.
-  - Calculate leverage values and the warning leverage threshold `h*`.
-  - Generate a Williams Plot to identify structural outliers and response outliers.
+Required Step 5.3 task:
+- Compile Section 3, `Results and Discussion`, in `docs/Paper_Draft.md`.
+- Discuss descriptor clustering performance, including Silhouette scores for Hierarchical, SOM, and K-Means tracks.
+- Discuss the 16-model screening matrix ranked strictly by `Q²_cv`.
+- Explain the selection of `Hierarchical_MC_MLR` as the champion model and contrast its robust linear behavior with the overfitting tendency of high-capacity RF/SVR models.
+- Report MCCV stability, Y-scrambling chance-correlation rejection, Williams Plot applicability-domain interpretation, and the direct Gramatica 2014 benchmark comparison.
 
-Locked final Champion Model for Phase 4:
+Mandatory Phase 5 manuscript protocol:
+- Read the full current `docs/Paper_Draft.md` before any manuscript edit.
+- Preserve the validated Phase 1-4 baseline and build cleanly from it.
+- Apply the strict academic formatting rules recorded in `docs/PROJECT.md`.
+
+Locked final Champion Model for manuscript compilation:
 - Model: `Hierarchical_MC_MLR`
 - Algorithm: MLR
 - Descriptors: `ABC`, `BCUTs-1h`, `C1SP2`, `ETA_shape_y`, `FilterItLogS`, `NdS`, `SlogP_VSA1`, `SlogP_VSA2`
@@ -126,6 +136,28 @@ Locked final Champion Model for Phase 4:
     - Scrambled `R²_y-sc` SD = 0.007
     - Maximum scrambled `R² = 0.039`
     - Conclusion: chance correlation is mathematically rejected; the model relies on authentic structure-property relationships.
+27. Completed Phase 4 predicted-versus-experimental visualization for the Champion Model:
+    - Output: `data/features/figure_predicted_vs_experimental.png`
+    - Training set: `n = 514`
+    - External test set: `n = 128`
+    - Diagnostic interpretation: predictions were symmetrically distributed around the `y = x` line, with no systematic bias or evident heteroscedasticity.
+28. Completed Phase 4 Williams Plot applicability-domain analysis:
+    - Output: `data/features/figure_williams_plot.png`
+    - Warning leverage threshold: `h* = 0.0525`
+    - Standardized residual bounds: `[-3, +3]`
+    - Diagnostic interpretation: the vast majority of training and external validation compounds fell within the accepted response and leverage domain.
+29. Completed comprehensive Phase 4 metrics integration:
+    - Output: `data/features/final_comprehensive_metrics.csv`
+    - Shape: `(16, 33)`
+    - Content: 12 linear models, 4 non-linear models, MCCV summaries, and Y-scrambling summaries in one unified master table.
+30. Completed Phase 5 - Step 5.1 quantitative benchmark and OECD validation coding:
+    - Output: `data/features/benchmark_oecd_comparison.csv`
+    - Historical baseline: Gramatica 2014 Model 4, `R²_train = 0.790`, `Q²_cv = 0.780`, external `R²_ext = 0.794`
+    - Champion model: `Hierarchical_MC_MLR`, `R²_train = 0.820182`, `Q²_cv = 0.811974`, external `Q²_ext F2 = 0.814252`
+31. Completed Phase 5 - Step 5.2 manuscript drafting:
+    - Section 1, `Introduction`, was authored.
+    - Section 2, `Materials and Methods`, was refined through Sections 2.1-2.5.
+    - Sections 3-6 were preserved as placeholders for subsequent manuscript compilation steps.
 
 ## Phase 1 Outputs
 - `data/processed/train.csv`
@@ -166,10 +198,16 @@ Locked final Champion Model for Phase 4:
 - `data/features/yscrambling_100_iterations.csv`
 - `data/features/yscrambling_summary.json`
 
-## Phase 4 Expected Outputs
-- Predicted vs. experimental scatter plot for the Champion Model
-- Williams Plot for Applicability Domain
-- Applicability-domain metrics including standardized residuals, leverage values, and warning leverage threshold `h*`
+## Phase 4 Outputs
+- `data/features/figure_predicted_vs_experimental.png`
+- `data/features/figure_williams_plot.png`
+- `data/features/final_comprehensive_metrics.csv`
+
+## Phase 5 Expected Outputs
+- `data/features/benchmark_oecd_comparison.csv`
+- Completed `docs/Paper_Draft.md` with Introduction, Discussion, Conclusion, and References finalized.
+- Final benchmark comparison against Gramatica et al. 2014.
+- Repository-facing workflow documentation prepared for project closure.
 
 ## Environment For Next Step
 Recommended environment:
