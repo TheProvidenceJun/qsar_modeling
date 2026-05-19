@@ -96,6 +96,20 @@ The benchmark comparison confirms that the proposed feature-clustering and Monte
 
 ## 4. Conclusion
 
+The present study developed and validated a parsimonious QSAR workflow for predicting $logK_{oc}$ using the QDB.177 dataset and a strict eight-descriptor constraint matching the Gramatica et al. (2014) benchmark model. The final champion model, `Hierarchical_MC_MLR`, combined hierarchical descriptor clustering, Monte Carlo feature selection, and multiple linear regression. This workflow reduced the original high-dimensional Mordred descriptor space to a chemically interpretable eight-descriptor model while preserving strong internal robustness, external predictivity, and regulatory transparency.
+
+The proposed clustering and feature-selection pipeline outperformed the historical Gramatica et al. (2014) Model 4 baseline without increasing mathematical complexity. The literature baseline reported external $R^2_{ext} = 0.794$, whereas the present champion model achieved external $Q^2_{ext\ F2} = 0.814252$, reported as $R^2_{ext\ F2} = 0.814$ in the rounded manuscript summary. The improvement was achieved under the identical eight-descriptor budget, indicating that the gain in predictivity was attributable to descriptor organization and selection strategy rather than expansion of model size.
+
+Comprehensive validation established the statistical reliability of the final model. The 100-iteration MCCV procedure yielded an average $R^2_{ext}$ of 0.806 with low dispersion, confirming that predictive performance remained stable across repeated random partitions. The Y-scrambling analysis reduced the average scrambled response fit to $R^2_{y-sc} = 0.016$, while the original model retained $R^2_{train} = 0.820$. This chance-correlation gap confirms that the descriptor-response relationship was not a random statistical artifact. The Williams Plot further confirmed that the external validation compounds fell within the defined applicability domain, bounded by standardized residual thresholds of $\pm 3$ and a warning leverage threshold of $h^* = 0.0525$.
+
+The final `Hierarchical_MC_MLR` model satisfies the five OECD principles for QSAR validation. The endpoint was clearly defined as $logK_{oc}$, the algorithm was unambiguous, the applicability domain was formally evaluated, the goodness-of-fit and validation statistics were appropriate, and the selected descriptors provide a basis for mechanistic interpretation. These validation outcomes support the use of the model as a reliable, transparent, and computationally efficient tool for regulatory environmental assessment of organic chemical soil sorption behavior.
+
 ## 5. References
+
+Gramatica, P.; Cassani, S.; Chirico, N. QSARINS-Chem: Insubria Datasets and New QSAR/QSPR Models for Environmental Pollutants in QSARINS. *J. Comput. Chem.* **2014**, *35*, 1036-1044.
+
+QSAR DataBank. QDB.177 Archive. DOI: 10.15152/QDB.177.
+
+Organisation for Economic Co-operation and Development. *Guidance Document on the Validation of (Quantitative) Structure-Activity Relationship [(Q)SAR] Models*; OECD Series on Testing and Assessment, Number 69; OECD Environment Directorate: Paris, 2007.
 
 ## 6. Appendix

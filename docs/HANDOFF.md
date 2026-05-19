@@ -1,7 +1,7 @@
 # Project Handoff
 
 ## Current Status
-Phase 5 - Step 5.2 is complete, and the project is now in Phase 5 - Step 5.3 for Results and Discussion compilation.
+Phase 5 - Step 5.3 is officially complete. The Results and Discussion section has been drafted, and the project is transitioning to Phase 5 - Steps 5.4 and 5.5.
 - The QDB.177 `M2.logKoc` endpoint was parsed from `data/raw/properties/M2.logKoc/values`.
 - Raw compound identifiers were mapped to SMILES files under `data/raw/compounds/<Compound Id>/daylight-smiles`.
 - RDKit validation and canonicalization secured 642 unique valid compounds from 643 raw entries.
@@ -25,6 +25,7 @@ Phase 5 - Step 5.2 is complete, and the project is now in Phase 5 - Step 5.3 for
 - Phase 5 manuscript rules have been sealed in `docs/PROJECT.md`, including formal academic tone, no raw numerals at sentence starts, tense consistency, explicit pronouns, disciplined logical transitions, and the requirement to build every paper expansion from the current Phase 1-4 baseline.
 - Phase 5 - Step 5.1 generated `data/features/benchmark_oecd_comparison.csv`, confirming direct comparison against Gramatica 2014 Model 4.
 - Phase 5 - Step 5.2 completed the manuscript Introduction and Materials and Methods sections in `docs/Paper_Draft.md`.
+- Phase 5 - Step 5.3 completed the manuscript Results and Discussion section in `docs/Paper_Draft.md`, including descriptor clustering performance, 16-model screening, champion selection, MCCV, Y-scrambling, applicability domain, and Gramatica 2014 benchmark comparison.
 
 ## Active Project
 - **Project:** QSAR logKoc Modeling Project
@@ -35,18 +36,20 @@ Phase 5 - Step 5.2 is complete, and the project is now in Phase 5 - Step 5.3 for
 - **Benchmark descriptor count:** 8 descriptors
 
 ## Current Phase
-**Phase 5 - Step 5.3: Results and Discussion Compiling**
+**Phase 5 - Steps 5.4 and 5.5: Conclusion, References, and Appendix Integration**
 This is the next action.
 
 ## Next Action
-Proceed to **Phase 5 - Step 5.3: Results and Discussion Compiling**.
+Proceed to **Phase 5 - Steps 5.4 and 5.5: Conclusion, References, and Appendix Integration**.
 
-Required Step 5.3 task:
-- Compile Section 3, `Results and Discussion`, in `docs/Paper_Draft.md`.
-- Discuss descriptor clustering performance, including Silhouette scores for Hierarchical, SOM, and K-Means tracks.
-- Discuss the 16-model screening matrix ranked strictly by `Q²_cv`.
-- Explain the selection of `Hierarchical_MC_MLR` as the champion model and contrast its robust linear behavior with the overfitting tendency of high-capacity RF/SVR models.
-- Report MCCV stability, Y-scrambling chance-correlation rejection, Williams Plot applicability-domain interpretation, and the direct Gramatica 2014 benchmark comparison.
+Required Step 5.4 task:
+- Finalize Section 4, `Conclusion`, in `docs/Paper_Draft.md`.
+- Finalize Section 5, `References`, using ACS-style scientific formatting.
+- Include the Gramatica et al. 2014 baseline citation, the QDB.177 archive DOI, and the OECD QSAR validation guidance document.
+
+Required Step 5.5 task:
+- Append the verified core source code to Section 6, `Appendix`.
+- Keep Appendix content concise and restricted to reproducibility-critical Phase 4 and Phase 5 code.
 
 Mandatory Phase 5 manuscript protocol:
 - Read the full current `docs/Paper_Draft.md` before any manuscript edit.
@@ -158,6 +161,12 @@ Locked final Champion Model for manuscript compilation:
     - Section 1, `Introduction`, was authored.
     - Section 2, `Materials and Methods`, was refined through Sections 2.1-2.5.
     - Sections 3-6 were preserved as placeholders for subsequent manuscript compilation steps.
+32. Completed Phase 5 - Step 5.3 manuscript drafting:
+    - Section 3, `Results and Discussion`, was authored.
+    - Descriptor clustering Silhouette scores were reported: Hierarchical = 0.108, SOM = 0.094, K-Means = 0.058.
+    - The 16-model screening matrix was interpreted under the strict `Q²_cv` model-selection policy.
+    - `Hierarchical_MC_MLR` was documented as the champion model.
+    - MCCV, Y-scrambling, applicability-domain, and Gramatica 2014 benchmark comparisons were integrated.
 
 ## Phase 1 Outputs
 - `data/processed/train.csv`
